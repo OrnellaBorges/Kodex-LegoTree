@@ -6,7 +6,7 @@ type CSVDataType = {
   year: string;
   theme: string;
 
-  [key: string]: string; // Permet des clés dynamiques
+  [key: string]: string;
 };
 
 // Exemple d'utilisation
