@@ -44,3 +44,41 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+Exercise
+Implementation
+You will be provided with three CSV files containing data about LEGO sets, parts, and inventories. Your task
+is to create a front-end application that parses these files and displays the data in an interactive tree
+structure.
+Task Details:
+Functionality:
+Load and parse the provided CSV files (sets.csv, parts.csv, inventories.csv).
+Display the sets under the root of the tree.
+For each set, display its inventory parts.
+For each part, display its name and color, including a visual element for the color.
+Ensure the tree is interactive, allowing nodes to be expanded or collapsed.
+
+Implementation Guidelines:
+Choose the programming language you are most comfortable with.
+Focus on creating a simple, functional application.
+The review will focus on your approach and decision-making.
+
+Objectif
+L'objectif de ce test technique est d'évaluer vos compétences en résolution de problèmes, votre méthodologie de travail et vos capacités d'optimisation dans le développement front-end. Ce test évaluera votre capacité à analyser des données, à mettre en œuvre une application fonctionnelle et à discuter des stratégies d'optimisation pour manipuler de grands ensembles de données.
+
+Exercice
+Implémentation
+Vous recevrez trois fichiers CSV contenant des données sur des ensembles LEGO, des pièces et des inventaires. Votre tâche consiste à créer une application front-end qui analyse ces fichiers et affiche les données dans une structure arborescente interactive.
+
+Détails de la tâche :
+Fonctionnalités :
+Charger et analyser les fichiers CSV fournis (sets.csv, parts.csv, inventories.csv).
+Afficher les ensembles sous la racine de l'arbre.
+Pour chaque ensemble, afficher les pièces de son inventaire.
+Pour chaque pièce, afficher son nom et sa couleur, y compris un élément visuel pour la couleur.
+Assurer que l'arbre est interactif, permettant aux nœuds d'être développés ou réduits.
+
+Directives d'implémentation :
+Choisissez le langage de programmation avec lequel vous êtes le plus à l'aise.
+Concentrez-vous sur la création d'une application simple et fonctionnelle.
+L'évaluation se concentrera sur votre approche et vos prises de décision.
