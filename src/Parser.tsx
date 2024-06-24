@@ -51,11 +51,14 @@ export default function Parser() {
 
   const parseCsv = (csvContent: string): CSVDataType[] => {
     const [keyRow, ...rows] = csvContent.trim().split("\n");
+    console.log("keyRow", keyRow);
+    console.log("rows", rows);
     const keys = keyRow.split(",").map((header) => header.trim());
     console.log("keys", keys);
 
     return rows.map((row) => {
       const rowValues = row.split(",").map((value) => value.trim());
+      console.log("rowValues", rowValues);
       return keys.reduce((obj, key, index) => {
         (obj as CSVDataType)[key] = rowValues[index];
         return obj;
@@ -67,34 +70,6 @@ export default function Parser() {
     console.log("generateObjetcArray");
     console.log("parsedCvs", parsedCsv);
   }; */
-
-  //fonction pour lire les csv
-  const readCsv = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      console.log("reader", reader);
-
-      reader.onload = (event) => {
-        // true
-        //console.warn("event", event);
-        if (event.target) {
-          //console.log("event.target", event.target);
-          const csvContent = event.target.result as string;
-          console.log("csvContent", csvContent);
-          resolve(csvContent);
-        } else {
-          //false
-          reject(new Error("Erreur lors de la lecture du fichier"));
-        }
-      };
-
-      reader.onerror = (event) => {
-        reject(new Error("Erreur lors de la lecture du fichier"));
-      };
-
-      reader.readAsText(file); // Lire le fichier en tant que texte
-    });
-  };
 
   //le traitement des fichiers peut etre long
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
