@@ -1,51 +1,50 @@
 import { useState, useEffect } from "react";
+import { stringParser, stringParserV2 } from "../utils/stringParser";
 
 type CSVDataType = {
-  [key: string]: string;
+  [key: string]: string | number;
 };
 
-type SetData = {
-  set_id: string;
-  _name: string;
-  year: string;
-  theme: string;
-  parts: PartData[];
-};
-
-type PartData = {
-  part_num: string;
-  name: string;
-  color: string;
-  quantity: number;
-};
 export function useCsvParser() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
   const [parsedCsvDatas, setParsedCsvData] = useState<CSVDataType[] | null>(
     null
   );
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
 
   // fonction qui converti les csv en tableau d'objet
-  const parseCsv = (csvContent: string): CSVDataType[] => {
-    const [keyRow, ...rows] = csvContent.trim().split("\n");
-    console.log("keyRow", keyRow);
-    console.log("rows", rows);
-    const keys = keyRow.split(",").map((header) => header.trim());
-    console.log("keys", keys);
+  const parseCsv = (csvContentTest: string): CSVDataType[] => {
+    const [keyRow, ...rows] = csvContentTest.trim().split("\n");
+    console.log("keyRow", keyRow); // string ???
+    console.log("rows", rows); // un tableau
 
-    return rows.map((row) => {
-      const rowValues = row.split(",").map((value) => value.trim());
-      console.log("rowValues", rowValues);
-      return keys.reduce((obj, key, index) => {
-        (obj as CSVDataType)[key] = rowValues[index];
+    const keysArray = keyRow.split(",").map((element) => element.trim());
+    console.log("keysArray", keysArray); // ['part_number', 'name', 'category']
+
+    // Limiter
+    /* const limitedRows = rows.slice(0, 50);
+    console.log("limited", limitedRows.length); */
+
+    const cleanedRows = stringParser(rows);
+    console.log("cleanedRows", cleanedRows);
+
+    return cleanedRows.map((row) => {
+      let columns: string[] = [];
+
+      // Créer l'objet CSVDataType en utilisant keys et columns
+      return keysArray.reduce((obj, key, index) => {
+        obj[key] = columns[index];
         return obj;
       }, {} as CSVDataType);
     });
   };
 
+  //useEffect(() => {}, []);
+
   return {
     isLoading,
     isError,
     parsedCsvDatas,
+    parseCsv,
   };
 }
