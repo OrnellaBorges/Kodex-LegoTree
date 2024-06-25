@@ -12,7 +12,15 @@ export default function Input({ setFileList }: InputProps) {
     console.log("Selected Files:", filesArray);
 
     // Mettre à jour fileList avec les nouveaux fichiers
-    setFileList((prevFileList) => [...prevFileList, ...filesArray]);
+    //setFileList((prevFileList) => [...prevFileList, ...filesArray]);
+
+    setFileList((prevFileList) => {
+      console.log("Previous File List:", prevFileList);
+      const updatedFileList = [...prevFileList, ...filesArray];
+      console.log("Updated File List:", updatedFileList);
+      return updatedFileList;
+    });
+    e.target.value = "";
   };
 
   return (

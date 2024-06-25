@@ -44,10 +44,10 @@ export default function CsvLoader() {
     e.preventDefault();
     console.log("SUBMIT");
 
-    /*   if (fileList.length === 0) {
+    if (fileList.length === 0) {
       console.error("Aucun fichier sélectionné.");
       return;
-    } */
+    }
 
     try {
       // Attendre la résolution de la promesse

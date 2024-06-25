@@ -88,8 +88,6 @@ export function lineParser(csvRows: string[], limit: number): CsvRowType[] {
     const spliter = ",";
     const quotes = '"';
 
-    let indexQuote = 0;
-
     const splitedString = currentStr.split(spliter);
     console.log("splitedString", splitedString);
 
@@ -133,8 +131,6 @@ export function lineParser(csvRows: string[], limit: number): CsvRowType[] {
     // quand le tableau newElements arrive a la limite
     if (newElements.length === limit) {
       console.log("fullfilled", newElements.length);
-      // on crée un tableau
-
       result.push(newElements);
       console.log("result", result);
     }

@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { readCsv } from "./utils/formatCsv";
+
 import { useCsvParser } from "./hooks/useCsvParser";
 
 import CsvLoader from "./components/CsvLoader";
 import LegoSetsViewer from "./components/Tree/LegoSetsViewer";
 
 function App() {
-  //const [fileList, setFileList] = useState<File[]>([]);
-
   /*   useEffect(() => {
     const fetchCsv = async () => {
       const response = await fetch(setsCsv);
