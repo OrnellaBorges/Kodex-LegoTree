@@ -132,3 +132,29 @@ export const mockSetsByTheme = [
     ],
   },
 ];
+
+const mockWithParts = [
+  {
+    set_id: "70906",
+    _name: "LEGO® Batman Movie - The Joker™ Notorious Lowrider",
+    year: 2017,
+    theme: "Batman",
+    parts: [
+      {
+        part_num: "10247",
+        _name: "Plate Special 2 x  2 with 1 Pin Hole [Complete Underside Rib]",
+        category: 9,
+      },
+      {
+        part_num: "10247",
+        _name: "Plate Special 2 x  2 with 1 Pin Hole [Complete Underside Rib]",
+        category: 9,
+      },
+      {
+        part_num: "10247",
+        _name: "Plate Special 2 x  2 with 1 Pin Hole [Complete Underside Rib]",
+        category: 9,
+      },
+    ],
+  },
+];

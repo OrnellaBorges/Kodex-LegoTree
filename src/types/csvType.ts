@@ -12,9 +12,10 @@ export type Part = {
 
 export type Inventory = {
   part_num: string;
-  quantity: number;
+  quantity: string;
   set_id: string;
   color: string;
+  _name: string;
 };
 
 export type LEGOSet = Set & {
@@ -25,4 +26,8 @@ export type LEGOSet = Set & {
     quantity: number;
     color: string;
   }>;
+};
+
+export type CSVParsedDataType = {
+  [key: string]: string | number;
 };
