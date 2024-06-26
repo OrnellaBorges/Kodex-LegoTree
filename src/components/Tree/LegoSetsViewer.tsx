@@ -1,5 +1,14 @@
 import React from "react";
+import { useCsvParser } from "../../hooks/useCsvParser";
+import { ParsedData } from "../../types/csvType";
 
-export default function LegoSetsViewer() {
-  return <div>LegoSetsViewer</div>;
+type LegoSetsViewerProps = {
+  data: ParsedData;
+};
+export default function LegoSetsViewer({ data }: LegoSetsViewerProps) {
+  return (
+    <main>
+      <ul></ul>
+    </main>
+  );
 }

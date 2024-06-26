@@ -3,12 +3,10 @@ import { readCsv } from "../utils/formatCsv";
 import Input from "./Form/Input";
 import { useCsvParser } from "../hooks/useCsvParser";
 
-import { CSVParsedDataType } from "../types/csvType";
+//import { CSVParsedDataType } from "../types/csvType";
 
 export default function CsvLoader() {
   const [fileList, setFileList] = useState<File[]>([]);
-  //const [csvDirty, setCsvDirty] = useState<string[]>([]);
-  //const [csvData, setCsvData] = useState<CSVParsedDataType[]>([]);
 
   const { setDatasToParse } = useCsvParser();
 
@@ -30,7 +28,8 @@ export default function CsvLoader() {
         }))
       );
 
-      console.log("resultReader", resultReader); // [{...},{...}]
+      console.log("resultReader", resultReader);
+      // [{...},{...}]
 
       // Envoyer les données structurées à setDatasToParse
       setDatasToParse(resultReader);

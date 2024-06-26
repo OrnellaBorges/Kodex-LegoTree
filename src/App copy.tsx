@@ -31,7 +31,7 @@ function App() {
       <header className="header">
         <CsvLoader />
       </header>
-      <LegoSetsViewer />
+      {/*       <LegoSetsViewer  data/> */}
     </div>
   );
 }

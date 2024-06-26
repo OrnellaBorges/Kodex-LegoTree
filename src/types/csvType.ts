@@ -18,6 +18,20 @@ export type Inventory = {
   _name: string;
 };
 
+export type MergedData = {
+  sets_id: string;
+  _name: string;
+  year: string;
+  parts: Part[];
+  inventory: Inventory[];
+};
+
+export type ParsedData = {
+  sets: Set[];
+  parts: Part[];
+  inventory: Inventory[];
+};
+
 export type LEGOSet = Set & {
   parts: Array<{
     part_num: string;

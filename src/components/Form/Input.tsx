@@ -21,12 +21,14 @@ export default function Input({ setFileList }: InputProps) {
   };
 
   return (
-    <input
-      id="csvInput"
-      type="file"
-      multiple
-      accept=".csv"
-      onChange={handleChange}
-    />
+    <label>
+      <input
+        id="csvInput"
+        type="file"
+        multiple
+        accept=".csv"
+        onChange={handleChange}
+      />
+    </label>
   );
 }

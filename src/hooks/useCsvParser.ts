@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { lineParser } from "../utils/parser";
 
-import { Set, Part, Inventory } from "../types/csvType";
+import { Set, Part, Inventory, ParsedData } from "../types/csvType";
 
 type CSVDataType = {
   [key: string]: string | number;
@@ -12,12 +12,6 @@ type DataToParseType = {
   content: string;
 };
 
-// Définir un type global pour parsedData
-type ParsedData = {
-  sets: Set[];
-  parts: Part[];
-  inventory: Inventory[];
-};
 export function useCsvParser() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
@@ -41,8 +35,6 @@ export function useCsvParser() {
   // fonction qui convertit les tableau string csv => en tableau d'objets
   const parseCsv = (dirtytext: string): CSVDataType[] => {
     console.log("JE PARSE !");
-
-    const datasParsed: CSVDataType[] = [];
 
     const [keyRow, ...rows] = dirtytext.trim().split("\n");
     console.log("keyRow", keyRow); // string
@@ -91,7 +83,7 @@ export function useCsvParser() {
       }
     };
 
-    // Réinitialiser parsedData
+    // Réinitialiser parsedData ??
     const newParsedData: ParsedData = {
       sets: [],
       parts: [],
@@ -111,11 +103,14 @@ export function useCsvParser() {
 
     setParsedData(newParsedData);
   }, [datasToParse]);
+
   console.log("parsedData", parsedData);
+
   return {
     isLoading,
     isError,
     parseCsv,
     setDatasToParse,
+    parsedData,
   };
 }
