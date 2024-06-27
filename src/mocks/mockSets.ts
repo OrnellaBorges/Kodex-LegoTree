@@ -55,7 +55,7 @@ export const mockSets = [
   },
 ];
 
-const mockWithParts = [
+const mockSetsWithParts = [
   {
     set_id: "70906",
     _name: "LEGO® Batman Movie - The Joker™ Notorious Lowrider",
@@ -63,19 +63,28 @@ const mockWithParts = [
     theme: "Batman",
     parts: [
       {
-        part_num: "10247",
+        part_num: "10170",
         _name: "Plate Special 2 x  2 with 1 Pin Hole [Complete Underside Rib]",
         category: 9,
+        inventory_part: {
+          part_num: "10170",
+          quantity: "1",
+          set_id: "70906",
+          color: "Medium Dark Flesh",
+          _name: "1x Pretzel",
+        },
       },
       {
-        part_num: "10247",
+        part_num: "10170",
         _name: "Plate Special 2 x  2 with 1 Pin Hole [Complete Underside Rib]",
         category: 9,
-      },
-      {
-        part_num: "10247",
-        _name: "Plate Special 2 x  2 with 1 Pin Hole [Complete Underside Rib]",
-        category: 9,
+        inventory_part: {
+          part_num: "10170",
+          quantity: "1",
+          set_id: "70906",
+          color: "Medium Dark Flesh",
+          _name: "1x Pretzel",
+        },
       },
     ],
   },

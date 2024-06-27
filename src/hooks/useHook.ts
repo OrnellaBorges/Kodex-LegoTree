@@ -25,6 +25,8 @@ export function useHook() {
     });
   };
 
+  const createLegoSets = (parsedResults: DataToParseType[]) => {};
+
   useEffect(() => {
     if (datasToParse.length > 0) {
       console.log("datasToParse Tableau d'ojet", datasToParse);
@@ -45,6 +47,9 @@ export function useHook() {
         });
 
         console.log("parsedResults", parsedResults);
+
+        // Créer la structure combinée des ensembles LEGO avec les pièces
+        //const legoSets = createLegoSets(parsedResults);
       } catch (error) {
         console.error("Erreur lors du parsing des fichiers CSV :", error);
         setIsLoading(false);

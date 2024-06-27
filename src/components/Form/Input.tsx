@@ -3,7 +3,7 @@ type InputProps = {
 };
 
 export default function Input({ setFileList }: InputProps) {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
 
@@ -21,14 +21,18 @@ export default function Input({ setFileList }: InputProps) {
   };
 
   return (
-    <label>
-      <input
-        id="csvInput"
-        type="file"
-        multiple
-        accept=".csv"
-        onChange={handleChange}
-      />
-    </label>
+    <div>
+      <label className="lable">
+        Glisser et déposer vos fichiers CSV ici ou cliquez pour sélectionner
+        <input
+          className="input"
+          id="csvInput"
+          type="file"
+          multiple
+          accept=".csv"
+          onChange={handleFileChange}
+        />
+      </label>
+    </div>
   );
 }

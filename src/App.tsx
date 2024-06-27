@@ -1,12 +1,12 @@
 import "./App.css";
 import CsvLoader from "./components/CsvLoader";
 import { useHook } from "./hooks/useHook";
-//import LegoSetsViewer from "./components/Tree/LegoSetsViewer";
+import LegoTree from "./components/Tree/LegoTree";
 //import { useCsvParser } from "./hooks/useCsvData";
 
 function App() {
   //HOOK
-  const { setDatasToParse } = useHook();
+  const { setDatasToParse, parsedData, isLoading } = useHook();
 
   //console.log("APP", parsedData);
 
@@ -15,7 +15,8 @@ function App() {
       <header className="header">
         <CsvLoader setDatasToParse={setDatasToParse} />
       </header>
-      {/* <LegoSetsViewer parsedData={parsedData} /> */}
+      {!isLoading && <LegoTree parsedData={parsedData} />}
+      {isLoading && <div>Loading...</div>}
     </div>
   );
 }
