@@ -1,6 +1,20 @@
 import { useState, useEffect } from "react";
-import { CSVDataType, DataToParseType, ParsedData } from "../types/csvType";
+import {
+  CSVDataType,
+  DataToParseType,
+  LegoSet,
+  ParsedData,
+} from "../types/csvType";
 import { lineParser } from "../utils/parser";
+
+type ResultType = {
+  fileName: string;
+  content: CSVDataType[];
+};
+
+type NewObjType = {
+  [key: string]: any[];
+};
 
 export function useHook() {
   const [datasToParse, setDatasToParse] = useState<DataToParseType[]>([]);
@@ -25,7 +39,19 @@ export function useHook() {
     });
   };
 
-  const createLegoSets = (parsedResults: DataToParseType[]) => {};
+  const createLegoSets = (parsedResults: ResultType[]) => {
+    const legoSets: LegoSet[] = [];
+    const newObj: NewObjType = {};
+
+    parsedResults.forEach((result) => {
+      newObj[result.fileName] = result.content;
+      console.log("newObj", newObj);
+      const keys = Object.keys(newObj).forEach((key) => {
+        console.log("key", key);
+      });
+      console.log("keys", keys);
+    });
+  };
 
   useEffect(() => {
     if (datasToParse.length > 0) {
@@ -49,7 +75,7 @@ export function useHook() {
         console.log("parsedResults", parsedResults);
 
         // Créer la structure combinée des ensembles LEGO avec les pièces
-        //const legoSets = createLegoSets(parsedResults);
+        const legoSets = createLegoSets(parsedResults);
       } catch (error) {
         console.error("Erreur lors du parsing des fichiers CSV :", error);
         setIsLoading(false);

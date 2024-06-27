@@ -32,6 +32,27 @@ export type ParsedData = {
   inventory: Inventory[];
 };
 
+export type LegoSet = {
+  set_id: string;
+  _name: string;
+  year: number;
+  theme: string;
+  parts: LegoPart[];
+};
+
+export type LegoPart = {
+  part_num: string;
+  _name: string;
+  category: number;
+  inventory_part: {
+    part_num: string;
+    quantity: string;
+    set_id: string;
+    color: string;
+    _name: string;
+  };
+};
+
 export type ParsedData2 = [
   { sets: Set[] },
   { parts: Part[] },

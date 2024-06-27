@@ -1,15 +1,21 @@
-import { ParsedData } from "../../types/csvType";
+//import { ParsedData } from "../../types/csvType";
 
-type LegoSetsViewerProps = {
-  parsedData: ParsedData;
+import { LegoSetType } from "../../types/legoTypes";
+import LegoSet from "./LegoSet";
+
+type LegoTreeProps = {
+  data: LegoSetType[];
 };
-export default function LegoTree({ parsedData }: LegoSetsViewerProps) {
-  console.log("JJJJJJJ ", parsedData);
-
+export default function LegoTree({ data }: LegoTreeProps) {
   return (
     <main>
       <h2>Lego Tree</h2>
-      <ul></ul>
+
+      <ul>
+        {data.map((set, index) => (
+          <LegoSet key={`${set.set_id}${index}`} />
+        ))}
+      </ul>
     </main>
   );
 }

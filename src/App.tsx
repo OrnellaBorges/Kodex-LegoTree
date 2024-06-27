@@ -3,6 +3,7 @@ import CsvLoader from "./components/CsvLoader";
 import { useHook } from "./hooks/useHook";
 import LegoTree from "./components/Tree/LegoTree";
 //import { useCsvParser } from "./hooks/useCsvData";
+import { mockSetsWithParts } from "./mocks/mockSets";
 
 function App() {
   //HOOK
@@ -15,7 +16,7 @@ function App() {
       <header className="header">
         <CsvLoader setDatasToParse={setDatasToParse} />
       </header>
-      {!isLoading && <LegoTree parsedData={parsedData} />}
+      {!isLoading && <LegoTree data={mockSetsWithParts} />}
       {isLoading && <div>Loading...</div>}
     </div>
   );
