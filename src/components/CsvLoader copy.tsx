@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { readCsv } from "../utils/formatCsv";
 import Input from "./Form/Input";
-import { useCsvParser } from "../hooks/useCsvParser";
+//import { useCsvParser } from "../hooks/useHook";
 
 import { CSVParsedDataType } from "../types/csvType";
 
@@ -10,7 +10,7 @@ export default function CsvLoader() {
   //const [csvDirty, setCsvDirty] = useState<string[]>([]);
   //const [csvData, setCsvData] = useState<CSVParsedDataType[]>([]);
 
-  const { setDatasToParse } = useCsvParser();
+  //const { setDatasToParse } = useCsvParser();
 
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

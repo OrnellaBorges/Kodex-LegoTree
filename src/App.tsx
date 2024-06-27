@@ -1,21 +1,21 @@
 import "./App.css";
-
 import CsvLoader from "./components/CsvLoader";
-import LegoSetsViewer from "./components/Tree/LegoSetsViewer";
-import { useCsvParser } from "./hooks/useCsvParser";
+import { useHook } from "./hooks/useHook";
+//import LegoSetsViewer from "./components/Tree/LegoSetsViewer";
+//import { useCsvParser } from "./hooks/useCsvData";
 
 function App() {
-  const { parsedData } = useCsvParser();
+  //HOOK
+  const { setDatasToParse } = useHook();
 
-  console.log("KKKKKK", parsedData);
+  //console.log("APP", parsedData);
 
-  console.log("sets", parsedData.sets);
   return (
     <div className="App">
       <header className="header">
-        <CsvLoader />
+        <CsvLoader setDatasToParse={setDatasToParse} />
       </header>
-      <LegoSetsViewer parsedDatas={parsedData} />
+      {/* <LegoSetsViewer parsedData={parsedData} /> */}
     </div>
   );
 }

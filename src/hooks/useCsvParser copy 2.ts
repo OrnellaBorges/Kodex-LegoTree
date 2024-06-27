@@ -104,7 +104,7 @@ export function useCsvParser() {
     setParsedData(newParsedData);
   }, [datasToParse]);
 
-  console.log("parsedData", parsedData);
+  console.log("parsedData HOOK", parsedData);
 
   return {
     isLoading,

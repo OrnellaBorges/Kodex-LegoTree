@@ -1,26 +1,27 @@
-import { useState } from "react";
+import { ReactEventHandler, useState } from "react";
 import { readCsv } from "../utils/formatCsv";
 import Input from "./Form/Input";
-import { useCsvParser } from "../hooks/useCsvParser";
+import { DataToParseType } from "../types/csvType";
 
-//import { CSVParsedDataType } from "../types/csvType";
+type CsvLoaderProps = {
+  setDatasToParse: React.Dispatch<React.SetStateAction<DataToParseType[]>>;
+};
 
-export default function CsvLoader() {
+export default function CsvLoader({ setDatasToParse }: CsvLoaderProps) {
   const [fileList, setFileList] = useState<File[]>([]);
-
-  const { setDatasToParse } = useCsvParser();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("SUBMIT FILES");
+    setIsLoading(true);
 
     if (fileList.length === 0) {
       console.error("Aucun fichier sélectionné.");
+      setIsLoading(false);
       return;
     }
 
     try {
-      // Attendre la résolution des promess
       const resultReader = await Promise.all(
         fileList.map(async (file) => ({
           fileName: file.name,
@@ -28,13 +29,12 @@ export default function CsvLoader() {
         }))
       );
 
-      console.log("resultReader", resultReader);
-      // [{...},{...}]
-
-      // Envoyer les données structurées à setDatasToParse
       setDatasToParse(resultReader);
     } catch (error) {
       console.error("Erreur lors de la lecture du fichier :", error);
+    } finally {
+      setIsLoading(false);
+      setFileList([]);
     }
   };
 
@@ -43,7 +43,7 @@ export default function CsvLoader() {
       <form id="csvForm" onSubmit={handleSubmitForm}>
         <Input setFileList={setFileList} />
         <button className="button" type="submit">
-          SUBMIT
+          {isLoading ? "Chargement..." : "SUBMIT"}
         </button>
       </form>
     </div>

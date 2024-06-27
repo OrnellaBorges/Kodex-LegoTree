@@ -32,6 +32,12 @@ export type ParsedData = {
   inventory: Inventory[];
 };
 
+export type ParsedData2 = [
+  { sets: Set[] },
+  { parts: Part[] },
+  { inventory: Inventory[] }
+];
+
 export type LEGOSet = Set & {
   parts: Array<{
     part_num: string;
@@ -44,4 +50,13 @@ export type LEGOSet = Set & {
 
 export type CSVParsedDataType = {
   [key: string]: string | number;
+};
+
+export type CSVDataType = {
+  [key: string]: string | number;
+};
+
+export type DataToParseType = {
+  fileName: string;
+  content: string;
 };
