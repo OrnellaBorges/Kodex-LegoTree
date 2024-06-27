@@ -1,15 +1,25 @@
-import React from "react";
-import LegoParts from "./LegoParts";
+import React, { useState } from "react";
 import { LegoSetType } from "../../types/legoTypes";
+import LegoParts from "./LegoParts";
 
-type SetDataProps = {
-  set: string;
+type LegoSetProps = {
+  set: LegoSetType;
 };
 
-export default function LegoSet(): SetDataProps {
+export default function LegoSet({ set }: LegoSetProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleOpen = () => {
+    setIsOpen(!isOpen);
+  };
   return (
-    <div>
-      <li>{set._name}</li>
-    </div>
+    <li>
+      <div onClick={toggleOpen}>
+        <h3>
+          {set._name} ({set.year})
+        </h3>
+      </div>
+      {isOpen && <LegoParts parts={set.parts} />}
+    </li>
   );
 }

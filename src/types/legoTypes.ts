@@ -6,7 +6,7 @@ export type InventoryPart = {
   _name: string;
 };
 
-export type LegoPart = {
+export type LegoPartType = {
   part_num: string;
   _name: string;
   category: number;
@@ -18,5 +18,5 @@ export type LegoSetType = {
   _name: string;
   year: number;
   theme: string;
-  parts: LegoPart[];
+  parts: LegoPartType[];
 };
