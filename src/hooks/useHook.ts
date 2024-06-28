@@ -13,7 +13,7 @@ type ResultType = {
 };
 
 type NewObjType = {
-  [key: string]: any[];
+  [fileName: string]: any[]; // Définir le type précis du contenu pour chaque fileName si possible
 };
 
 export function useHook() {
@@ -39,18 +39,14 @@ export function useHook() {
     });
   };
 
-  const createLegoSets = (parsedResults: ResultType[]) => {
-    const legoSets: LegoSet[] = [];
+  const createLegoSets = (parsedResults: ResultType[]): NewObjType => {
     const newObj: NewObjType = {};
 
     parsedResults.forEach((result) => {
       newObj[result.fileName] = result.content;
       console.log("newObj", newObj);
-      const keys = Object.keys(newObj).forEach((key) => {
-        console.log("key", key);
-      });
-      console.log("keys", keys);
     });
+    return newObj;
   };
 
   useEffect(() => {
@@ -76,6 +72,9 @@ export function useHook() {
 
         // Créer la structure combinée des ensembles LEGO avec les pièces
         const legoSets = createLegoSets(parsedResults);
+        const { sets, parts, inventory } = legoSets;
+        console.log("sets", sets);
+        console.log("parts", parts);
       } catch (error) {
         console.error("Erreur lors du parsing des fichiers CSV :", error);
         setIsLoading(false);

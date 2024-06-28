@@ -1,5 +1,3 @@
-// type CsvRowType = [string, string, number];
-
 type CsvRowType = (string | number)[];
 
 export function lineParser(csvRows: string[], limit: number): CsvRowType[] {

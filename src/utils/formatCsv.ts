@@ -1,13 +1,3 @@
-/*
-
-API JAVASCRIPT ==== FileReader()
-
-La fonction readCsv est une fonction asynchrone
-=> prend un fichier (File) en paramètre,
-=>lit son contenu en tant que texte, 
-=> et retourne une promesse résolue avec le contenu du fichier 
-CSV sous forme de chaîne de caractères.
-*/
 export const readCsv = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     // use FileReader nativ Api
