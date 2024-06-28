@@ -1,4 +1,3 @@
-import React from "react";
 import { LegoSetType } from "../../types/legoTypes";
 import LegoSet from "./LegoSet";
 

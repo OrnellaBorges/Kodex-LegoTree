@@ -7,7 +7,7 @@ type LegoPartsProps = {
 
 export default function LegoParts({ parts }: LegoPartsProps) {
   return (
-    <ul>
+    <ul className="legoParts">
       {parts.map((part) => (
         <LegoPart key={part.part_num} part={part} />
       ))}

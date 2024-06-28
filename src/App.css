@@ -73,7 +73,7 @@ main {
 }
 
 .parentNode {
-  padding: 1rem;
+  padding: 1rem 0;
   border: 2px solid black;
   max-width: 100%;
   cursor: pointer;
@@ -85,4 +85,17 @@ main {
   border: 2px solid green;
   width: 100%;
   cursor: pointer;
+}
+.legoParts {
+  border: 3px solid red;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inventory {
+  border: 3px solid orange;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }

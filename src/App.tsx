@@ -4,12 +4,13 @@ import { useHook } from "./hooks/useHook";
 import LegoTree from "./components/Tree/LegoTree";
 //import { useCsvParser } from "./hooks/useCsvData";
 import { mockSetsWithParts } from "./mocks/mockSets";
+import { useEffect } from "react";
 
 function App() {
   //HOOK
-  const { setDatasToParse, isLoading } = useHook();
+  const { setDatasToParse, isLoading, legoSetsCompleted } = useHook();
 
-  //console.log("APP", parsedData);
+  /*   useEffect(() => {}, [legoSets, legoParts, legoInventory]); */
 
   return (
     <div className="App">

@@ -7,7 +7,7 @@ type InventoryDetailsProps = {
 
 export default function InventoryDetails({ inventory }: InventoryDetailsProps) {
   return (
-    <div>
+    <div className="inventory">
       <p>Name: {inventory._name}</p>
       <p>Quantity: {inventory.quantity}</p>
 

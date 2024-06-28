@@ -20,3 +20,11 @@ export type LegoSetType = {
   theme: string;
   parts: LegoPartType[];
 };
+
+export type LegoSetType2 = {
+  set_id: string;
+  _name: string;
+  year: number;
+  theme: string;
+  parts: InventoryPart[];
+};
