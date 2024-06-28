@@ -1,5 +1,5 @@
 import { LegoPartType } from "../../types/legoTypes";
-import LegoPart from "./Part";
+import LegoPart from "./LegoPart";
 
 type LegoPartsProps = {
   parts: LegoPartType[];

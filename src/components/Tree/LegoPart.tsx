@@ -9,13 +9,13 @@ type LegoPartProps = {
 export default function LegoPart({ part }: LegoPartProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleOpen = () => {
+  const toggleExpandPart = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <li>
-      <div onClick={toggleOpen}>
+    <li className="childNode">
+      <div onClick={toggleExpandPart}>
         <p>{part._name}</p>
       </div>
       {isOpen && <InventoryDetails inventory={part.inventory_part} />}

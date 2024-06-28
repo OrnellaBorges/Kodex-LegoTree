@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import {
   CSVDataType,
   DataToParseType,
+  Inventory,
   LegoSet,
   ParsedData,
+  Part,
+  Set,
 } from "../types/csvType";
 import { lineParser } from "../utils/parser";
 
@@ -13,17 +16,16 @@ type ResultType = {
 };
 
 type NewObjType = {
-  [fileName: string]: any[]; // Définir le type précis du contenu pour chaque fileName si possible
+  [fileName: string]: any[];
 };
 
 export function useHook() {
   const [datasToParse, setDatasToParse] = useState<DataToParseType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [parsedData, setParsedData] = useState<ParsedData>({
-    sets: [],
-    parts: [],
-    inventory: [],
-  });
+
+  const [legoSets, setLegoSets] = useState<Set[]>([]);
+  const [legoParts, setLegoParts] = useState<Part[]>([]);
+  const [legoInventory, setLegoInventory] = useState<Part[]>([]);
 
   const parseContent = (dirtytext: string): CSVDataType[] => {
     const [keyRow, ...rows] = dirtytext.trim().split("\n");
@@ -39,7 +41,7 @@ export function useHook() {
     });
   };
 
-  const createLegoSets = (parsedResults: ResultType[]): NewObjType => {
+  const transformParsedResult = (parsedResults: ResultType[]): NewObjType => {
     const newObj: NewObjType = {};
 
     parsedResults.forEach((result) => {
@@ -71,10 +73,11 @@ export function useHook() {
         console.log("parsedResults", parsedResults);
 
         // Créer la structure combinée des ensembles LEGO avec les pièces
-        const legoSets = createLegoSets(parsedResults);
-        const { sets, parts, inventory } = legoSets;
-        console.log("sets", sets);
-        console.log("parts", parts);
+        const transformedResult = transformParsedResult(parsedResults);
+        const { sets, parts, inventory } = transformedResult;
+        setLegoSets(sets);
+        setLegoParts(parts);
+        setLegoInventory(inventory);
       } catch (error) {
         console.error("Erreur lors du parsing des fichiers CSV :", error);
         setIsLoading(false);
@@ -86,9 +89,10 @@ export function useHook() {
     parseData();
   }, [datasToParse]);
 
+  console.log("legoSets", legoSets);
+
   return {
     isLoading,
-    parsedData,
     setDatasToParse,
   };
 }

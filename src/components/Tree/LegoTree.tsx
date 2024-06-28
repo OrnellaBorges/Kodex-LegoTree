@@ -10,9 +10,9 @@ export default function LegoTree({ data }: LegoTreeProps) {
   return (
     <main>
       <h2>Lego Tree</h2>
-      <ul>
-        {data.map((set) => (
-          <LegoSet key={set.set_id} set={set} />
+      <ul className="parentNode">
+        {data.map((set, setIndex) => (
+          <LegoSet key={`${set.set_id} ${setIndex}`} set={set} />
         ))}
       </ul>
     </main>

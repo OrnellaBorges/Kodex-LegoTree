@@ -7,7 +7,7 @@ import { mockSetsWithParts } from "./mocks/mockSets";
 
 function App() {
   //HOOK
-  const { setDatasToParse, parsedData, isLoading } = useHook();
+  const { setDatasToParse, isLoading } = useHook();
 
   //console.log("APP", parsedData);
 
@@ -17,6 +17,7 @@ function App() {
         <CsvLoader setDatasToParse={setDatasToParse} />
       </header>
       {!isLoading && <LegoTree data={mockSetsWithParts} />}
+      {/* {!isLoading && <LegoTree data={parsedData} />} */}
       {isLoading && <div>Loading...</div>}
     </div>
   );

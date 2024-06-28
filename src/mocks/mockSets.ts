@@ -63,7 +63,19 @@ export const mockSetsWithParts = [
     theme: "Batman",
     parts: [
       {
-        part_num: "10170",
+        part_num: "10150",
+        _name: "Plate Special 2 x  2 with 1 Pin Hole [Complete Underside Rib]",
+        category: 9,
+        inventory_part: {
+          part_num: "101670",
+          quantity: "1",
+          set_id: "70906",
+          color: "Medium Dark Flesh",
+          _name: "1x Pretzel",
+        },
+      },
+      {
+        part_num: "101270",
         _name: "Plate Special 2 x  2 with 1 Pin Hole [Complete Underside Rib]",
         category: 9,
         inventory_part: {
@@ -75,19 +87,7 @@ export const mockSetsWithParts = [
         },
       },
       {
-        part_num: "10170",
-        _name: "Plate Special 2 x  2 with 1 Pin Hole [Complete Underside Rib]",
-        category: 9,
-        inventory_part: {
-          part_num: "10170",
-          quantity: "1",
-          set_id: "70906",
-          color: "Medium Dark Flesh",
-          _name: "1x Pretzel",
-        },
-      },
-      {
-        part_num: "10170",
+        part_num: "130170",
         _name: "Plate Special 2 x  2 with 1 Pin Hole [Complete Underside Rib]",
         category: 9,
         inventory_part: {

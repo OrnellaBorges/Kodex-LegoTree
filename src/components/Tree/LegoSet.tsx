@@ -9,15 +9,13 @@ type LegoSetProps = {
 export default function LegoSet({ set }: LegoSetProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleOpen = () => {
+  const toggleOpenPart = () => {
     setIsOpen(!isOpen);
   };
   return (
     <li>
-      <div onClick={toggleOpen}>
-        <h3>
-          {set._name} ({set.year})
-        </h3>
+      <div onClick={toggleOpenPart}>
+        <h3>{set._name}</h3>
       </div>
       {isOpen && <LegoParts parts={set.parts} />}
     </li>
