@@ -1,8 +1,8 @@
-import { LegoSetType } from "../../types/legoTypes";
+import { LegoSetType, LegoSetType2 } from "../../types/legoTypes";
 import LegoSet from "./LegoSet";
 
 type LegoTreeProps = {
-  data: LegoSetType[];
+  data: LegoSetType2[];
 };
 
 export default function LegoTree({ data }: LegoTreeProps) {

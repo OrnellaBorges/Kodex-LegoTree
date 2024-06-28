@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { LegoPartType } from "../../types/legoTypes";
+import { LegoPartType, InventoryPart } from "../../types/legoTypes";
 import InventoryDetails from "./InventoryDetails";
 
 type LegoPartProps = {
-  part: LegoPartType;
+  part: InventoryPart;
 };
 
 export default function LegoPart({ part }: LegoPartProps) {
@@ -18,7 +18,7 @@ export default function LegoPart({ part }: LegoPartProps) {
       <div onClick={toggleExpandPart}>
         <p>{part._name}</p>
       </div>
-      {isOpen && <InventoryDetails inventory={part.inventory_part} />}
+      {/*  {isOpen && <InventoryDetails inventory={part.inventory_part} />} */}
     </li>
   );
 }

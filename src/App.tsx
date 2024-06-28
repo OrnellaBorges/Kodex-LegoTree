@@ -17,7 +17,7 @@ function App() {
       <header className="header">
         <CsvLoader setDatasToParse={setDatasToParse} />
       </header>
-      {!isLoading && <LegoTree data={mockSetsWithParts} />}
+      {!isLoading && <LegoTree data={legoSetsCompleted} />}
       {/* {!isLoading && <LegoTree data={parsedData} />} */}
       {isLoading && <div>Loading...</div>}
     </div>
