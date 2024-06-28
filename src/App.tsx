@@ -10,7 +10,9 @@ function App() {
   //HOOK
   const { setDatasToParse, isLoading, legoSetsCompleted } = useHook();
 
-  /*   useEffect(() => {}, [legoSets, legoParts, legoInventory]); */
+  useEffect(() => {
+    console.log("App component loaded");
+  }, []);
 
   return (
     <div className="App">

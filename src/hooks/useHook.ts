@@ -67,9 +67,15 @@ export function useHook() {
   };
 
   useEffect(() => {
+    if (datasToParse.length === 0) {
+      console.log("Pas de parsing");
+      return;
+    }
+
     if (datasToParse.length > 0) {
       console.log("datasToParse Tableau d'ojet", datasToParse);
     }
+
     const parseData = async () => {
       setIsLoading(true);
 
@@ -85,7 +91,7 @@ export function useHook() {
           };
         });
 
-        console.log("parsedResults", parsedResults);
+        //console.log("parsedResults", parsedResults);
 
         const transformedResult = transformParsedResult(parsedResults);
 
@@ -94,13 +100,16 @@ export function useHook() {
         const findPartsOfSets = sets.map((set) => {
           const partsInventory = inventory
             .filter((item) => item.set_id === set.set_id)
-            .map((item) => ({
-              part_num: item.part_num,
-              quantity: item.quantity,
-              color: item.color,
-              _name: item._name,
-              set_id: item.set_id,
-            }));
+            .map((piece) => {
+              const searchMissingkey = parts.find(
+                (el) => el.part_num === piece.part_num
+              );
+              return searchMissingkey
+                ? { ...piece, category: searchMissingkey.category }
+                : piece;
+            });
+
+          console.log("partsInventory", partsInventory);
           //Retourner un nouvel objet
           return {
             set_id: set.set_id,
@@ -110,13 +119,14 @@ export function useHook() {
             parts: partsInventory,
           };
         });
+
         console.log("findPartsOfSets", findPartsOfSets);
 
         /* setLegoSets(sets);
         setLegoParts(parts);
         setLegoInventory(inventory); */
 
-        setLegoSetsCompleted(findPartsOfSets);
+        //setLegoSetsCompleted(findPartsOfSets);
       } catch (error) {
         console.error("Erreur lors du parsing des fichiers CSV :", error);
         setIsLoading(false);
@@ -127,6 +137,8 @@ export function useHook() {
 
     parseData();
   }, [datasToParse]);
+
+  useEffect(() => {});
 
   return {
     isLoading,

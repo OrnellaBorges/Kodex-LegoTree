@@ -34,7 +34,7 @@ export default function CsvLoader({ setDatasToParse }: CsvLoaderProps) {
       console.error("Erreur lors de la lecture du fichier :", error);
     } finally {
       setIsLoading(false);
-      setFileList([]);
+      setFileList([]); // vider fileList
     }
   };
 
