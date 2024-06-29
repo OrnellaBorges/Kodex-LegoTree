@@ -1,11 +1,13 @@
+import { CSVDataType, DataToParseType } from "../types/csvType";
+
 type CsvRowType = (string | number)[];
 
-export function lineParser(csvRows: string[], limit: number): CsvRowType[] {
+function rowCleaner(csvRows: string[], limit: number): CsvRowType[] {
   const result: CsvRowType[] = [];
-  //console.log("csvRows", csvRows);
+  console.log("CLEANING ROWS");
 
   for (let i = 0; i < csvRows.length; i++) {
-    console.log("START BIG LOOP PARSER LINE");
+    //console.log("START BIG LOOP PARSER LINE");
     let currentStr = csvRows[i];
     //console.log("currentStr", currentStr);
 
@@ -64,3 +66,27 @@ export function lineParser(csvRows: string[], limit: number): CsvRowType[] {
 
   return result;
 }
+
+export const convertCsvContent = (dirtytext: string): CSVDataType[] => {
+  const [keyRow, ...rows] = dirtytext.trim().split("\n");
+  const keysArray = keyRow.split(",").map((element) => element.trim());
+  const limitedRows = rows.slice(0, 5000);
+  const cleanedRows = rowCleaner(limitedRows, keysArray.length);
+  const result = cleanedRows.map((row) => {
+    return keysArray.reduce((obj, key, index) => {
+      obj[key] = row[index];
+      return obj;
+    }, {} as CSVDataType);
+  });
+  return result;
+};
+
+/* const parsedResults = datasToParse.map((el) => {
+    const parsedContent = cleanCsvContent(el.content);
+    const fileNameToKey = el.fileName.replace(".csv", "").toLowerCase();
+    console.log("fileNameToKey", fileNameToKey);
+    console.log("parsedContent", parsedContent);
+    return {
+      fileName: fileNameToKey,
+      content: parsedContent,
+    }; */

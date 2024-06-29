@@ -21,6 +21,13 @@ export type LegoSetType = {
   parts: LegoPartType[];
 };
 
+export type SetType = {
+  set_id: string;
+  _name: string;
+  year: number;
+  theme: string;
+};
+
 export type LegoSetType2 = {
   set_id: string;
   _name: string;

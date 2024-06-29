@@ -5,25 +5,31 @@ type InputProps = {
 export default function Input({ setFileList }: InputProps) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (!files) return;
+    console.log("files", files);
 
-    // Convertir FileList en un tableau de File
-    const filesArray = Array.from(files) as File[];
-    console.log("Selected Files:", filesArray);
+    if (files) {
+      // stocker dans filesArray chaque files recu dans untableau
+      const filesArray = Array.from(files) as File[];
+      console.log("Selected Files:", filesArray);
+      //Maj le state fileList via le setter du CsvLoader passé en props
+      setFileList((prevFileList) => {
+        console.log("Previous:", prevFileList);
+        const updatedFileList = [...prevFileList, ...filesArray];
+        console.log("Updated:", updatedFileList);
+        return updatedFileList;
+      });
+    }
 
-    setFileList((prevFileList) => {
-      console.log("Previous File List:", prevFileList);
-      const updatedFileList = [...prevFileList, ...filesArray];
-      console.log("Updated File List:", updatedFileList);
-      return updatedFileList;
-    });
-    e.target.value = ""; // ??POURQUOI
+    // Ne pas réinitialiser l'input pour permettre de sélectionner plusieurs fois le même fichier
+    // e.target.value = "";
+
+    // Réinitialisation facultative de l'input pour des besoins spécifiques
+    // e.target.value = "";
   };
 
   return (
     <div>
       <label className="lable">
-        Glisser et déposer vos fichiers CSV ici ou cliquez pour sélectionner
         <input
           className="input"
           id="csvInput"

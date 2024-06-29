@@ -8,8 +8,10 @@ type CsvLoaderProps = {
 };
 
 export default function CsvLoader({ setDatasToParse }: CsvLoaderProps) {
-  const [fileList, setFileList] = useState<File[]>([]);
+  const [fileList, setFileList] = useState<File[]>([]); // lui recupère les csv via l'input
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  console.log("fileList", fileList);
 
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,12 +24,19 @@ export default function CsvLoader({ setDatasToParse }: CsvLoaderProps) {
     }
 
     try {
+      // resultReader renvoit un tableau d'objet [{fileName: "sets.csv", content: `contenu en text brut`}]
       const resultReader = await Promise.all(
+        // boucle sur le tableau fileList
+
+        // pour chaque file il va creer un objet => {fileName: "sets.csv", content:`contenu en texte brute`}
         fileList.map(async (file) => ({
+          // extraire ne nom
           fileName: file.name,
+          // le contenu du csv est envoyé dans la fonction readCsv
           content: await readCsv(file),
         }))
       );
+      console.log("ressultReader", resultReader);
 
       setDatasToParse(resultReader);
     } catch (error) {

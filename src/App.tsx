@@ -3,12 +3,12 @@ import CsvLoader from "./components/CsvLoader";
 import { useHook } from "./hooks/useHook";
 import LegoTree from "./components/Tree/LegoTree";
 //import { useCsvParser } from "./hooks/useCsvData";
-import { mockSetsWithParts } from "./mocks/mockSets";
+import { mockSetsWithParts, mockSets } from "./mocks/mockSets";
 import { useEffect } from "react";
 
 function App() {
   //HOOK
-  const { setDatasToParse, isLoading, legoSetsCompleted } = useHook();
+  const { setDatasToParse, isLoading, legoSets, setSelectedSetIds } = useHook();
 
   useEffect(() => {
     console.log("App component loaded");
@@ -19,8 +19,9 @@ function App() {
       <header className="header">
         <CsvLoader setDatasToParse={setDatasToParse} />
       </header>
-      {!isLoading && <LegoTree data={legoSetsCompleted} />}
-      {/* {!isLoading && <LegoTree data={parsedData} />} */}
+
+      {/*  <LegoTree data={mockSets} /> */}
+
       {isLoading && <div>Loading...</div>}
     </div>
   );

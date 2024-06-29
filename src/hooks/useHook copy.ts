@@ -35,13 +35,13 @@ export function useHook() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedSetIds, setSelectedSetIds] = useState<string[]>([]);
 
-  const [legoSets, setLegoSets] = useState<Set[]>([]);
-  // const [legoParts, setLegoParts] = useState<Part[]>([]);
-  // const [legoInventory, setLegoInventory] = useState<Part[]>([]); */
+  /*   const [legoSets, setLegoSets] = useState<Set[]>([]);
+  const [legoParts, setLegoParts] = useState<Part[]>([]);
+  const [legoInventory, setLegoInventory] = useState<Part[]>([]); */
 
-  /*  const [legoSetsCompleted, setLegoSetsCompleted] = useState<LegoSetType2[]>(
+  const [legoSetsCompleted, setLegoSetsCompleted] = useState<LegoSetType2[]>(
     []
-  ); */
+  );
 
   /* const transformParsedResult = (parsedResults: ResultType[]): NewObjType => {
     const newObj: NewObjType = {};
@@ -79,17 +79,9 @@ export function useHook() {
 
         console.log("parsedResults", parsedResults);
 
-        const transformedResult = parsedResults.reduce(
-          (acc, { key, content }) => {
-            acc[key] = content;
-            return acc;
-          },
-          {} as NewObjType
-        );
+        //const transformedResult = transformParsedResult(parsedResults);
 
-        const { sets } = transformedResult; // destructure l'objet
-
-        setLegoSets(sets);
+        //const { sets, parts, inventory } = transformedResult; // destructure l'objet
 
         /* const findPartsOfSets = sets.map((set) => {
           const partsInventory = inventory
@@ -140,6 +132,6 @@ export function useHook() {
     isLoading,
     setDatasToParse,
     setSelectedSetIds,
-    legoSets,
+    legoSetsCompleted,
   };
 }

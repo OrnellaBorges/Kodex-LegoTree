@@ -1,8 +1,9 @@
+import { Set } from "../../types/csvType";
 import { LegoSetType, LegoSetType2 } from "../../types/legoTypes";
 import LegoSet from "./LegoSet";
 
 type LegoTreeProps = {
-  data: LegoSetType2[];
+  data: Set[];
 };
 
 export default function LegoTree({ data }: LegoTreeProps) {
