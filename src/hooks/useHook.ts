@@ -10,7 +10,7 @@ import {
   Set,
 } from "../types/csvType";
 
-import { convertCsvContent } from "../utils/parser";
+import { cleanCsvContent } from "../utils/parser";
 import { InventoryPart, LegoSetType } from "../types/legoTypes";
 
 type ResultType = {
@@ -30,12 +30,24 @@ type LegoSetType2 = {
   parts: Inventory[];
 };
 
+type LegoSetsState = {
+  sets?: Set[] | undefined;
+  parts?: Part[] | undefined;
+  inventory?: Inventory[] | undefined;
+};
+
 export function useHook() {
   const [datasToParse, setDatasToParse] = useState<DataToParseType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedSetIds, setSelectedSetIds] = useState<string[]>([]);
 
-  const [legoSets, setLegoSets] = useState<Set[]>([]);
+  const [legoData, setLegoData] = useState<LegoSetsState>({
+    sets: [],
+    parts: [],
+    inventory: [],
+  });
+
+  //const [legoSets, setLegoSets] = useState<Set[]>();
   // const [legoParts, setLegoParts] = useState<Part[]>([]);
   // const [legoInventory, setLegoInventory] = useState<Part[]>([]); */
 
@@ -53,8 +65,6 @@ export function useHook() {
     return newObj;
   }; */
 
-  console.log("datasToParse", datasToParse);
-
   useEffect(() => {
     if (datasToParse.length === 0) {
       console.log("Pas de parsing");
@@ -69,16 +79,33 @@ export function useHook() {
       setIsLoading(true);
 
       try {
-        const parsedResults = datasToParse.map((el) => {
+        const parsedResults = datasToParse.map((data) => {
           console.warn("parsinng");
-          return {
-            key: el.fileName.replace(".csv", "").toLowerCase(),
-            content: convertCsvContent(el.content),
-          };
+
+          const { fileName, content } = data;
+          console.log("fileNamedata ", fileName);
+
+          if (fileName === "sets") {
+            console.log("isSets");
+            const sets = cleanCsvContent(content);
+
+            setLegoData((prev) => ({ ...prev, sets }));
+          }
+
+          /*  return {
+            key: data.fileName,
+            content: convertCsvContent(data.content),
+          }; */
         });
 
-        console.log("parsedResults", parsedResults);
+        // console.log("setsCsvData", setsCsvData);
 
+        //const parsedSets = parseDataToObjects(setsCsvData);
+
+        /*  const parsedResults = parseDataToObjects(datasToParse);
+        console.log("parsedResults", parsedResults); */
+
+        /* 
         const transformedResult = parsedResults.reduce(
           (acc, { key, content }) => {
             acc[key] = content;
@@ -86,10 +113,10 @@ export function useHook() {
           },
           {} as NewObjType
         );
+ */
+        //const { sets } = transformedResult; // destructure l'objet
 
-        const { sets } = transformedResult; // destructure l'objet
-
-        setLegoSets(sets);
+        // setLegoSets(sets);
 
         /* const findPartsOfSets = sets.map((set) => {
           const partsInventory = inventory
@@ -129,17 +156,18 @@ export function useHook() {
       }
     };
 
-    //parseData();
+    parseData();
   }, [datasToParse]);
 
   const handleSetClick = (setId: string) => {
     console.log("setId", setId);
   };
 
+  console.log("legoData", legoData);
+
   return {
     isLoading,
     setDatasToParse,
     setSelectedSetIds,
-    legoSets,
   };
 }

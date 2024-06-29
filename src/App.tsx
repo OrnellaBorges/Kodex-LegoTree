@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 function App() {
   //HOOK
-  const { setDatasToParse, isLoading, legoSets, setSelectedSetIds } = useHook();
+  const { setDatasToParse, isLoading, setSelectedSetIds } = useHook();
 
   useEffect(() => {
     console.log("App component loaded");

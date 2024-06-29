@@ -2,6 +2,7 @@ import { ReactEventHandler, useState } from "react";
 import { readCsv } from "../utils/formatCsv";
 import Input from "./Form/Input";
 import { DataToParseType } from "../types/csvType";
+import { Button } from "./Buttons/Button";
 
 type CsvLoaderProps = {
   setDatasToParse: React.Dispatch<React.SetStateAction<DataToParseType[]>>;
@@ -25,20 +26,21 @@ export default function CsvLoader({ setDatasToParse }: CsvLoaderProps) {
 
     try {
       // resultReader renvoit un tableau d'objet [{fileName: "sets.csv", content: `contenu en text brut`}]
-      const resultReader = await Promise.all(
+      const resultReaderArray = await Promise.all(
         // boucle sur le tableau fileList
 
         // pour chaque file il va creer un objet => {fileName: "sets.csv", content:`contenu en texte brute`}
-        fileList.map(async (file) => ({
-          // extraire ne nom
-          fileName: file.name,
+        fileList.map(async (file) => {
+          // retirer le .csv
+          const fileName = file.name.replace(".csv", "");
           // le contenu du csv est envoyé dans la fonction readCsv
-          content: await readCsv(file),
-        }))
-      );
-      console.log("ressultReader", resultReader);
+          const content = await readCsv(file);
 
-      setDatasToParse(resultReader);
+          return { fileName, content };
+        })
+      );
+
+      setDatasToParse(resultReaderArray);
     } catch (error) {
       console.error("Erreur lors de la lecture du fichier :", error);
     } finally {
@@ -51,9 +53,12 @@ export default function CsvLoader({ setDatasToParse }: CsvLoaderProps) {
     <div>
       <form id="csvForm" onSubmit={handleSubmitForm}>
         <Input setFileList={setFileList} />
-        <button className="button" type="submit">
+        <Button type={"submit"}>
           {isLoading ? "Chargement..." : "SUBMIT"}
-        </button>
+        </Button>
+        {/* <button className="button" type="submit">
+          {isLoading ? "Chargement..." : "SUBMIT"}
+        </button> */}
       </form>
     </div>
   );

@@ -67,7 +67,7 @@ function rowCleaner(csvRows: string[], limit: number): CsvRowType[] {
   return result;
 }
 
-export const convertCsvContent = (dirtytext: string): CSVDataType[] => {
+export const cleanCsvContent = (dirtytext: string): CSVDataType[] => {
   const [keyRow, ...rows] = dirtytext.trim().split("\n");
   const keysArray = keyRow.split(",").map((element) => element.trim());
   const limitedRows = rows.slice(0, 5000);
@@ -80,6 +80,25 @@ export const convertCsvContent = (dirtytext: string): CSVDataType[] => {
   });
   return result;
 };
+
+//type CSVObject = { [key: string]: string };
+
+/* export const convertCsvContent = <T>(dirtytext: string): T[] => {
+  const [keyRow, ...rows] = dirtytext.trim().split("\n");
+
+  const keysArray = keyRow.split(",").map((element) => element.trim());
+  const limitedRows = rows.slice(0, 5000);
+  const cleanedRows = rowCleaner(limitedRows, keysArray.length);
+
+  const result = cleanedRows.map((r) => {
+    return keysArray.reduce((obj, key, index) => {
+      obj[key as keyof T] = r[index];
+      return obj;
+    }, {} as T);
+  });
+
+  return result;
+}; */
 
 /* const parsedResults = datasToParse.map((el) => {
     const parsedContent = cleanCsvContent(el.content);
