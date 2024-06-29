@@ -3,9 +3,6 @@ import {
   CSVDataType,
   DataToParseType,
   Inventory,
-  LEGOSet,
-  LegoSet,
-  ParsedData,
   Part,
   Set,
 } from "../types/csvType";
@@ -31,9 +28,9 @@ type LegoSetType2 = {
 };
 
 type LegoSetsState = {
-  sets?: Set[] | undefined;
-  parts?: Part[] | undefined;
-  inventory?: Inventory[] | undefined;
+  sets: Set[];
+  parts?: Part[];
+  inventory?: Inventory[];
 };
 
 export function useHook() {
@@ -46,14 +43,6 @@ export function useHook() {
     parts: [],
     inventory: [],
   });
-
-  //const [legoSets, setLegoSets] = useState<Set[]>();
-  // const [legoParts, setLegoParts] = useState<Part[]>([]);
-  // const [legoInventory, setLegoInventory] = useState<Part[]>([]); */
-
-  /*  const [legoSetsCompleted, setLegoSetsCompleted] = useState<LegoSetType2[]>(
-    []
-  ); */
 
   /* const transformParsedResult = (parsedResults: ResultType[]): NewObjType => {
     const newObj: NewObjType = {};
@@ -75,35 +64,20 @@ export function useHook() {
       console.log("datasToParse Tableau d'ojet", datasToParse);
     }
 
-    const parseData = async () => {
+    const parseSets = async () => {
       setIsLoading(true);
 
       try {
-        const parsedResults = datasToParse.map((data) => {
-          console.warn("parsinng");
+        const setsData = datasToParse.find((data) => data.fileName === "sets");
 
-          const { fileName, content } = data;
-          console.log("fileNamedata ", fileName);
-
-          if (fileName === "sets") {
-            console.log("isSets");
-            const sets = cleanCsvContent(content);
-
-            setLegoData((prev) => ({ ...prev, sets }));
-          }
-
-          /*  return {
-            key: data.fileName,
-            content: convertCsvContent(data.content),
-          }; */
-        });
-
-        // console.log("setsCsvData", setsCsvData);
-
-        //const parsedSets = parseDataToObjects(setsCsvData);
-
-        /*  const parsedResults = parseDataToObjects(datasToParse);
-        console.log("parsedResults", parsedResults); */
+        if (setsData) {
+          const { content, fileName } = setsData;
+          const parsedSets = cleanCsvContent(content, fileName) as Set[];
+          setLegoData((prevData) => ({
+            ...prevData,
+            sets: parsedSets,
+          }));
+        }
 
         /* 
         const transformedResult = parsedResults.reduce(
@@ -156,7 +130,7 @@ export function useHook() {
       }
     };
 
-    parseData();
+    parseSets();
   }, [datasToParse]);
 
   const handleSetClick = (setId: string) => {
@@ -169,5 +143,6 @@ export function useHook() {
     isLoading,
     setDatasToParse,
     setSelectedSetIds,
+    legoData,
   };
 }

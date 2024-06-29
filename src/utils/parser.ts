@@ -1,4 +1,5 @@
-import { CSVDataType, DataToParseType } from "../types/csvType";
+import { CSVDataType } from "../types/csvType";
+//import { CsvData } from "../types/";
 
 type CsvRowType = (string | number)[];
 
@@ -67,11 +68,15 @@ function rowCleaner(csvRows: string[], limit: number): CsvRowType[] {
   return result;
 }
 
-export const cleanCsvContent = (dirtytext: string): CSVDataType[] => {
+export const cleanCsvContent = (
+  dirtytext: string,
+  fileName: string
+): CSVDataType[] => {
   const [keyRow, ...rows] = dirtytext.trim().split("\n");
   const keysArray = keyRow.split(",").map((element) => element.trim());
   const limitedRows = rows.slice(0, 5000);
   const cleanedRows = rowCleaner(limitedRows, keysArray.length);
+
   const result = cleanedRows.map((row) => {
     return keysArray.reduce((obj, key, index) => {
       obj[key] = row[index];
