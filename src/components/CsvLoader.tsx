@@ -32,7 +32,7 @@ export default function CsvLoader({ setDatasToParse }: CsvLoaderProps) {
         // pour chaque file il va creer un objet => {fileName: "sets.csv", content:`contenu en texte brute`}
         fileList.map(async (file) => {
           // retirer le .csv
-          const fileName = file.name.replace(".csv", "");
+          const fileName = file.name.replace(".csv", "").toLowerCase();
           // le contenu du csv est envoyé dans la fonction readCsv
           const content = await readCsv(file);
 

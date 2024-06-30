@@ -44,14 +44,32 @@ export function useHook() {
     inventory: [],
   });
 
-  const [partsOfLegoSet, setPartsOfLegoSet] = useState<Part[]>();
+  //const [partsOfLegoSet, setPartsOfLegoSet] = useState<Part[]>();
+
+  const getPartsOfLegoSets = async () => {
+    try {
+      console.log("first");
+      const inventoryData = datasToParse.find(
+        (data) => data.fileName === "inventory"
+      );
+
+      console.log("inventoryData", inventoryData);
+      if (inventoryData) {
+        const { fileName, content } = inventoryData;
+        const testFilter = filteredRowsToConvert(fileName, content);
+        console.log("testFilter", testFilter);
+      }
+    } catch (error) {
+      console.error("Erreur lors du parsing des fichiers CSV :", error);
+    }
+  };
 
   useEffect(() => {
     if (datasToParse.length === 0) {
       console.log("Pas de parsing");
       return;
     }
-
+    console.log("datasToParse", datasToParse);
     const parseSets = async () => {
       setIsLoading(true);
 
@@ -85,10 +103,7 @@ export function useHook() {
     console.log("SetId", selectedSetIds);
     console.log("datasToParse", datasToParse);
 
-    /*  const newData = datasToParse.filter((el) => el.fileName !== "sets");
-    console.log("newData", newData); */
-
-    // filteredRowsToConvert()
+    getPartsOfLegoSets();
   }, [selectedSetIds]);
 
   //a DEPLACER dans APP

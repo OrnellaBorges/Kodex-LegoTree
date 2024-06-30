@@ -109,6 +109,8 @@ export const filteredRowsToConvert = (dirtyText: string, fileName: string) => {
   console.log("splitedRows", splitedRows);
   const filteredRows = splitedRows.filter((r) => r[index] !== undefined);
   console.log("filteredRows", filteredRows);
+
+  return filteredRows;
 };
 
 //type CSVObject = { [key: string]: string };
