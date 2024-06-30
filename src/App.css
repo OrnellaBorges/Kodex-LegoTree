@@ -67,35 +67,22 @@ form {
 }
 
 main {
-  border: 1px solid red;
-  width: 50%;
+  border: 5px solid red;
+  width: 60%;
   margin: 0 auto;
 }
 
 .parentNode {
-  padding: 1rem 0;
-  border: 2px solid black;
+  border: 3px solid black;
   max-width: 100%;
   cursor: pointer;
-  gap: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
-.childNode {
+.legoSet {
   padding: 1rem;
   border: 2px solid green;
   width: 100%;
   cursor: pointer;
-}
-.legoParts {
-  border: 3px solid red;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.inventory {
-  border: 3px solid orange;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 }

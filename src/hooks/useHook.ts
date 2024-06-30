@@ -7,7 +7,7 @@ import {
   Set,
 } from "../types/csvType";
 
-import { cleanCsvContent } from "../utils/parser";
+import { cleanCsvContent, filteredRowsToConvert } from "../utils/parser";
 import { InventoryPart, LegoSetType } from "../types/legoTypes";
 
 type ResultType = {
@@ -44,24 +44,12 @@ export function useHook() {
     inventory: [],
   });
 
-  /* const transformParsedResult = (parsedResults: ResultType[]): NewObjType => {
-    const newObj: NewObjType = {};
-
-    parsedResults.forEach((result) => {
-      newObj[result.fileName] = result.content;
-      console.log("newObj", newObj);
-    });
-    return newObj;
-  }; */
+  const [partsOfLegoSet, setPartsOfLegoSet] = useState<Part[]>();
 
   useEffect(() => {
     if (datasToParse.length === 0) {
       console.log("Pas de parsing");
       return;
-    }
-
-    if (datasToParse.length > 0) {
-      console.log("datasToParse Tableau d'ojet", datasToParse);
     }
 
     const parseSets = async () => {
@@ -77,51 +65,11 @@ export function useHook() {
             ...prevData,
             sets: parsedSets,
           }));
+          // Retirer "sets" de datasToParse pour eviter un traitement inutile
+          setDatasToParse((prevData) =>
+            prevData.filter((data) => data.fileName !== "sets")
+          );
         }
-
-        /* 
-        const transformedResult = parsedResults.reduce(
-          (acc, { key, content }) => {
-            acc[key] = content;
-            return acc;
-          },
-          {} as NewObjType
-        );
- */
-        //const { sets } = transformedResult; // destructure l'objet
-
-        // setLegoSets(sets);
-
-        /* const findPartsOfSets = sets.map((set) => {
-          const partsInventory = inventory
-            .filter((item) => item.set_id === set.set_id)
-            .map((piece) => {
-              const searchMissingkey = parts.find(
-                (el) => el.part_num === piece.part_num
-              );
-              return searchMissingkey
-                ? { ...piece, category: searchMissingkey.category }
-                : piece;
-            });
-
-          console.log("partsInventory", partsInventory);
-          //Retourner un nouvel objet
-          return {
-            set_id: set.set_id,
-            _name: set._name,
-            year: set.year,
-            theme: set.theme,
-            parts: partsInventory,
-          };
-        }); */
-
-        //console.log("findPartsOfSets", findPartsOfSets);
-
-        /* setLegoSets(sets);
-        setLegoParts(parts);
-        setLegoInventory(inventory); */
-
-        //setLegoSetsCompleted(findPartsOfSets);
       } catch (error) {
         console.error("Erreur lors du parsing des fichiers CSV :", error);
         setIsLoading(false);
@@ -133,16 +81,33 @@ export function useHook() {
     parseSets();
   }, [datasToParse]);
 
-  const handleSetClick = (setId: string) => {
-    console.log("setId", setId);
-  };
+  useEffect(() => {
+    console.log("SetId", selectedSetIds);
+    console.log("datasToParse", datasToParse);
 
-  console.log("legoData", legoData);
+    /*  const newData = datasToParse.filter((el) => el.fileName !== "sets");
+    console.log("newData", newData); */
+
+    // filteredRowsToConvert()
+  }, [selectedSetIds]);
+
+  //a DEPLACER dans APP
+  const handleSetClick = (setId: string) => {
+    setSelectedSetIds((prev) => {
+      //Verifier la présence de l'id dans le tableau
+      if (prev.includes(setId)) {
+        return prev.filter((id) => id !== setId);
+      } else {
+        return [...prev, setId];
+      }
+    });
+  };
 
   return {
     isLoading,
     setDatasToParse,
     setSelectedSetIds,
     legoData,
+    handleSetClick,
   };
 }

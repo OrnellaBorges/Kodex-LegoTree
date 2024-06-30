@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 function App() {
   //HOOK
-  const { setDatasToParse, isLoading, setSelectedSetIds, legoData } = useHook();
+  const { setDatasToParse, isLoading, legoData, handleSetClick } = useHook();
 
   useEffect(() => {
     console.log("App component loaded");
@@ -19,7 +19,7 @@ function App() {
       <header className="header">
         <CsvLoader setDatasToParse={setDatasToParse} />
       </header>
-      {legoData && <LegoTree data={legoData} />}
+      {legoData && <LegoTree data={legoData} onClick={handleSetClick} />}
 
       {isLoading && <div>Loading...</div>}
     </div>

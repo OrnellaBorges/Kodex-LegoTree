@@ -5,19 +5,22 @@ import LegoParts from "./LegoParts";
 
 type LegoSetProps = {
   set: Set;
+  onClick: (setId: string) => void;
 };
 
-export default function LegoSet({ set }: LegoSetProps) {
+export default function LegoSet({ set, onClick }: LegoSetProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleOpenPart = () => {
+  //events
+  const handleClick = () => {
     setIsOpen(!isOpen);
+    onClick(set.set_id);
   };
+
   return (
-    <li>
-      <div onClick={toggleOpenPart}>
-        <h3>{set._name}</h3>
-      </div>
+    <li className="legoSet" onClick={handleClick}>
+      <h3>{set._name}</h3>
+
       {/* {isOpen && <LegoParts parts={set.parts} />} */}
     </li>
   );

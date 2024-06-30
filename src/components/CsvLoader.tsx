@@ -18,11 +18,11 @@ export default function CsvLoader({ setDatasToParse }: CsvLoaderProps) {
     e.preventDefault();
     setIsLoading(true);
 
-    if (fileList.length === 0) {
+    /*   if (fileList.length === 0) {
       console.error("Aucun fichier sélectionné.");
       setIsLoading(false);
       return;
-    }
+    } */
 
     try {
       // resultReader renvoit un tableau d'objet [{fileName: "sets.csv", content: `contenu en text brut`}]
@@ -56,9 +56,6 @@ export default function CsvLoader({ setDatasToParse }: CsvLoaderProps) {
         <Button type={"submit"}>
           {isLoading ? "Chargement..." : "SUBMIT"}
         </Button>
-        {/* <button className="button" type="submit">
-          {isLoading ? "Chargement..." : "SUBMIT"}
-        </button> */}
       </form>
     </div>
   );

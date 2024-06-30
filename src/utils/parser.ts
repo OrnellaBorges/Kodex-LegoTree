@@ -86,6 +86,31 @@ export const cleanCsvContent = (
   return result;
 };
 
+export const filteredRowsToConvert = (dirtyText: string, fileName: string) => {
+  // Séparer le texte brut en lignes
+  const [keyRow, ...rows] = dirtyText.trim().split("\n");
+
+  // Convertir la ligne de clés en tableau de clés
+  const keysArray: string[] = keyRow
+    .split(",")
+    .map((element) => element.trim());
+
+  let filteredKey: string;
+
+  if (fileName === "parts") {
+    filteredKey = "part_num";
+  } else {
+    filteredKey = "set-id";
+  }
+
+  const index = keysArray.indexOf(filteredKey);
+  console.log("index", index);
+  const splitedRows = rows.map((r) => r.split(","));
+  console.log("splitedRows", splitedRows);
+  const filteredRows = splitedRows.filter((r) => r[index] !== undefined);
+  console.log("filteredRows", filteredRows);
+};
+
 //type CSVObject = { [key: string]: string };
 
 /* export const convertCsvContent = <T>(dirtytext: string): T[] => {

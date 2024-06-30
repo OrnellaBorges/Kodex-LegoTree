@@ -9,15 +9,20 @@ type LegoSetsState = {
 };
 type LegoTreeProps = {
   data: LegoSetsState;
+  onClick: (setId: string) => void;
 };
 
-export default function LegoTree({ data }: LegoTreeProps) {
+export default function LegoTree({ data, onClick }: LegoTreeProps) {
   return (
     <main>
       <h2>Lego Tree</h2>
       <ul className="parentNode">
         {data.sets.map((set, setIndex) => (
-          <LegoSet key={`${set.set_id} ${setIndex}`} set={set} />
+          <LegoSet
+            key={`${set.set_id} ${setIndex}`}
+            set={set}
+            onClick={onClick}
+          />
         ))}
       </ul>
     </main>
