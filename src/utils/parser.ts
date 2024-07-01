@@ -1,3 +1,4 @@
+import { Volcano } from "@mui/icons-material";
 import { CSVDataType } from "../types/csvType";
 //import { CsvData } from "../types/";
 
@@ -86,31 +87,40 @@ export const cleanCsvContent = (
   return result;
 };
 
-export const filteredRowsToConvert = (dirtyText: string, fileName: string) => {
+export const filteredRowsToConvert = (
+  fileName: string,
+  dirtyText: string,
+  selectedSetId: string
+) => {
   // Séparer le texte brut en lignes
   const [keyRow, ...rows] = dirtyText.trim().split("\n");
+  console.log("keyRow", keyRow);
 
   // Convertir la ligne de clés en tableau de clés
   const keysArray: string[] = keyRow
     .split(",")
     .map((element) => element.trim());
-
+  console.log("keysArray", keysArray);
   let filteredKey: string;
 
   if (fileName === "parts") {
     filteredKey = "part_num";
   } else {
-    filteredKey = "set-id";
+    filteredKey = "set_id";
   }
 
+  console.log("filteredKey", filteredKey);
   const index = keysArray.indexOf(filteredKey);
   console.log("index", index);
-  const splitedRows = rows.map((r) => r.split(","));
-  console.log("splitedRows", splitedRows);
-  const filteredRows = splitedRows.filter((r) => r[index] !== undefined);
-  console.log("filteredRows", filteredRows);
 
-  return filteredRows;
+  const foundRows = rows.filter((row) => {
+    const rowElements = row.split(",").map((str) => str.trim());
+    const value = rowElements[index];
+
+    return value === selectedSetId;
+  });
+
+  return foundRows;
 };
 
 //type CSVObject = { [key: string]: string };

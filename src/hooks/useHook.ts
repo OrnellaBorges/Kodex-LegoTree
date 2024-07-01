@@ -46,18 +46,23 @@ export function useHook() {
 
   //const [partsOfLegoSet, setPartsOfLegoSet] = useState<Part[]>();
 
-  const getPartsOfLegoSets = async () => {
+  // Fonction pour récupérer les pièces d'un ensemble LEGO
+  const getPartsOfLegoSets = async (selectedSetId: string) => {
     try {
-      console.log("first");
       const inventoryData = datasToParse.find(
         (data) => data.fileName === "inventory"
       );
 
-      console.log("inventoryData", inventoryData);
       if (inventoryData) {
         const { fileName, content } = inventoryData;
-        const testFilter = filteredRowsToConvert(fileName, content);
-        console.log("testFilter", testFilter);
+        const filteredRows = filteredRowsToConvert(
+          fileName,
+          content,
+          selectedSetId
+        );
+        console.log("filteredRows", filteredRows);
+        const parsedValue = cleanCsvContent(filteredRows, fileName);
+        //console.log("parsedValue", parsedValue);
       }
     } catch (error) {
       console.error("Erreur lors du parsing des fichiers CSV :", error);
@@ -103,7 +108,7 @@ export function useHook() {
     console.log("SetId", selectedSetIds);
     console.log("datasToParse", datasToParse);
 
-    getPartsOfLegoSets();
+    getPartsOfLegoSets(selectedSetIds[0]);
   }, [selectedSetIds]);
 
   //a DEPLACER dans APP
