@@ -71,8 +71,7 @@ function rowCleaner(csvRows: string[], limit: number): CsvRowType[] {
 }
 
 export const cleanCsvContent = (
-  dirtytext: string,
-  fileName: string
+  dirtytext: string | string[]
 ): CSVDataType[] => {
   const { keysArray, rows } = extractKeysAndRows(dirtytext);
 
@@ -88,41 +87,84 @@ export const cleanCsvContent = (
   return result;
 };
 
-const searchRowsToConvert = (
-  keysArray: string[],
-  rows: string[],
-  filterValues: string[],
-  filterKey: string
-) => {};
+export const determineFilterKey = (fileName: string): string => {
+  if (fileName === "parts") {
+    return "part_num";
+  } else if (fileName === "inventory") {
+    return "set_id";
+  } else {
+    throw new Error(
+      `Nom de fichier "${fileName}" non supporté pour le filtrage.`
+    );
+  }
+};
 
 export const filteredRowsToConvert = (
+  keysArray: string[],
   fileName: string,
-  dirtyText: string,
-  selectedSetId: string
-) => {
-  const { keysArray, rows } = extractKeysAndRows(dirtyText);
-
-  let filteredKey: string;
-  if (fileName === "parts") {
-    filteredKey = "part_num";
-  } else {
-    filteredKey = "set_id";
-  }
-  console.log("filteredKey", filteredKey);
-
-  const index = keysArray.indexOf(filteredKey);
+  dirtyText: string[],
+  selectedId: string | string[]
+): string[] => {
+  const filterKey = determineFilterKey(fileName);
+  console.log("filterKey", filterKey);
+  const index = keysArray.indexOf(filterKey);
   console.log("index", index);
+  if (index === -1) {
+    throw new Error(
+      `Clé de filtre "${filterKey}" introuvable dans les clés fournies.`
+    );
+  }
 
-  const foundRows = rows.filter((row) => {
+  const filteredRows = dirtyText.filter((row) => {
+    const rowElements = row.split(",").map((str) => str.trim());
+    const valueToFound = rowElements[index];
+    // console.log("valueToFound", valueToFound);
+
+    if (Array.isArray(selectedId)) {
+      return selectedId.includes(valueToFound);
+    } else {
+      return valueToFound === selectedId;
+    }
+  });
+
+  return filteredRows;
+};
+
+export const filteredRowsWithSet = (
+  keysArray: string[],
+  rows: string[],
+  filterKey: string,
+  filterValues: string | string[]
+): string[] => {
+  const index = keysArray.indexOf(filterKey);
+  if (index === -1) {
+    throw new Error(
+      `Clé de filtre "${filterKey}" introuvable dans les clés fournies.`
+    );
+  }
+
+  const filteredRows: string[] = [];
+  const filterValuesSet = new Set(
+    Array.isArray(filterValues) ? filterValues : [filterValues]
+  );
+  const foundValuesSet = new Set();
+
+  for (const row of rows) {
     const rowElements = row.split(",").map((str) => str.trim());
     const valueToFound = rowElements[index];
 
-    //=>  true ou false
-    const filteredRows = valueToFound === selectedSetId;
-    console.log("filteredRows", filteredRows);
+    if (
+      filterValuesSet.has(valueToFound) &&
+      !foundValuesSet.has(valueToFound)
+    ) {
+      filteredRows.push(row);
+      foundValuesSet.add(valueToFound);
 
-    return filteredRows;
-  });
+      if (foundValuesSet.size === filterValuesSet.size) {
+        break; // Toutes les correspondances trouvées, arrêter le filtrage
+      }
+    }
+  }
 
-  return foundRows;
+  return filteredRows;
 };
