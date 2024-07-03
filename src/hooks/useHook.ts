@@ -74,13 +74,8 @@ export function useHook() {
           selectedSetId
         );
 
-        /*  const filteredRowsInventory = filteredRowsWithSet(
-          inventoryKeys,
-          inventoryRows,
-          "set_id",
-          selectedSetId
-        ); */
-        console.log("filteredRowsInventory", filteredRowsInventory);
+        const test = cleanCsvContent(inventoryKeys, filteredRowsInventory);
+        console.log("test", test);
 
         // extract Part-num de filteredRowsInventory
         const partNums = filteredRowsInventory.map((r) => {
@@ -105,7 +100,9 @@ export function useHook() {
           partNums
         );
         console.log("filteredRowsParts", filteredRowsParts);
-        const test = cleanCsvContent(filteredRowsParts);
+        const testParts = cleanCsvContent(partKeys, filteredRowsParts);
+
+        console.log("testparts", testParts);
       }
     } catch (error) {
       console.error("Erreur lors du parsing des fichiers CSV :", error);
@@ -125,8 +122,9 @@ export function useHook() {
         const setsData = datasToParse.find((data) => data.fileName === "sets");
 
         if (setsData) {
-          const { content, fileName } = setsData;
-          const parsedSets = cleanCsvContent(content) as Set[];
+          const { content } = setsData;
+          const { keysArray, rows } = extractKeysAndRows(content);
+          const parsedSets = cleanCsvContent(keysArray, rows) as Set[];
           setLegoData((prevData) => ({
             ...prevData,
             sets: parsedSets,

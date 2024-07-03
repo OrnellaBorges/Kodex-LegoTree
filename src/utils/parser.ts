@@ -1,6 +1,4 @@
-import { Volcano } from "@mui/icons-material";
 import { CSVDataType } from "../types/csvType";
-import { extractKeysAndRows } from "./utils";
 //import { CsvData } from "../types/";
 
 type CsvRowType = (string | number)[];
@@ -71,11 +69,10 @@ function rowCleaner(csvRows: string[], limit: number): CsvRowType[] {
 }
 
 export const cleanCsvContent = (
-  dirtytext: string | string[]
+  keysArray: string[],
+  dirtytext: string[]
 ): CSVDataType[] => {
-  const { keysArray, rows } = extractKeysAndRows(dirtytext);
-
-  const limitedRows = rows.slice(0, 5000);
+  const limitedRows = dirtytext.slice(0, 5000);
   const cleanedRows = rowCleaner(limitedRows, keysArray.length);
 
   const result = cleanedRows.map((row) => {

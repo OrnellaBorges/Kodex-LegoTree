@@ -35,3 +35,12 @@ export type LegoSetType2 = {
   theme: string;
   parts: InventoryPart[];
 };
+
+export type MergedObject = {
+  part_num: string;
+  _name: string;
+  category: string;
+  quantity: string;
+  set_id: string;
+  color: string;
+};
