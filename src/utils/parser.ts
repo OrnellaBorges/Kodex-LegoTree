@@ -1,5 +1,6 @@
 import { Volcano } from "@mui/icons-material";
 import { CSVDataType } from "../types/csvType";
+import { extractKeysAndRows } from "./utils";
 //import { CsvData } from "../types/";
 
 type CsvRowType = (string | number)[];
@@ -73,8 +74,8 @@ export const cleanCsvContent = (
   dirtytext: string,
   fileName: string
 ): CSVDataType[] => {
-  const [keyRow, ...rows] = dirtytext.trim().split("\n");
-  const keysArray = keyRow.split(",").map((element) => element.trim());
+  const { keysArray, rows } = extractKeysAndRows(dirtytext);
+
   const limitedRows = rows.slice(0, 5000);
   const cleanedRows = rowCleaner(limitedRows, keysArray.length);
 
@@ -87,67 +88,41 @@ export const cleanCsvContent = (
   return result;
 };
 
+const searchRowsToConvert = (
+  keysArray: string[],
+  rows: string[],
+  filterValues: string[],
+  filterKey: string
+) => {};
+
 export const filteredRowsToConvert = (
   fileName: string,
   dirtyText: string,
   selectedSetId: string
 ) => {
-  // Séparer le texte brut en lignes
-  const [keyRow, ...rows] = dirtyText.trim().split("\n");
-  console.log("keyRow", keyRow);
+  const { keysArray, rows } = extractKeysAndRows(dirtyText);
 
-  // Convertir la ligne de clés en tableau de clés
-  const keysArray: string[] = keyRow
-    .split(",")
-    .map((element) => element.trim());
-  console.log("keysArray", keysArray);
   let filteredKey: string;
-
   if (fileName === "parts") {
     filteredKey = "part_num";
   } else {
     filteredKey = "set_id";
   }
-
   console.log("filteredKey", filteredKey);
+
   const index = keysArray.indexOf(filteredKey);
   console.log("index", index);
 
   const foundRows = rows.filter((row) => {
     const rowElements = row.split(",").map((str) => str.trim());
-    const value = rowElements[index];
+    const valueToFound = rowElements[index];
 
-    return value === selectedSetId;
+    //=>  true ou false
+    const filteredRows = valueToFound === selectedSetId;
+    console.log("filteredRows", filteredRows);
+
+    return filteredRows;
   });
 
   return foundRows;
 };
-
-//type CSVObject = { [key: string]: string };
-
-/* export const convertCsvContent = <T>(dirtytext: string): T[] => {
-  const [keyRow, ...rows] = dirtytext.trim().split("\n");
-
-  const keysArray = keyRow.split(",").map((element) => element.trim());
-  const limitedRows = rows.slice(0, 5000);
-  const cleanedRows = rowCleaner(limitedRows, keysArray.length);
-
-  const result = cleanedRows.map((r) => {
-    return keysArray.reduce((obj, key, index) => {
-      obj[key as keyof T] = r[index];
-      return obj;
-    }, {} as T);
-  });
-
-  return result;
-}; */
-
-/* const parsedResults = datasToParse.map((el) => {
-    const parsedContent = cleanCsvContent(el.content);
-    const fileNameToKey = el.fileName.replace(".csv", "").toLowerCase();
-    console.log("fileNameToKey", fileNameToKey);
-    console.log("parsedContent", parsedContent);
-    return {
-      fileName: fileNameToKey,
-      content: parsedContent,
-    }; */

@@ -9,6 +9,7 @@ import {
 
 import { cleanCsvContent, filteredRowsToConvert } from "../utils/parser";
 import { InventoryPart, LegoSetType } from "../types/legoTypes";
+import { extractKeysAndRows } from "../utils/utils";
 
 type ResultType = {
   fileName: string;
@@ -52,17 +53,37 @@ export function useHook() {
       const inventoryData = datasToParse.find(
         (data) => data.fileName === "inventory"
       );
+      console.log("inventoryData", inventoryData);
 
-      if (inventoryData) {
-        const { fileName, content } = inventoryData;
-        const filteredRows = filteredRowsToConvert(
-          fileName,
-          content,
+      const { keysArray: inventoryKeys, rows: inventoryRows } =
+        extractKeysAndRows(inventoryData.content);
+
+      const partsData = datasToParse.find((data) => data.fileName === "parts");
+      console.log("partsData", partsData);
+
+      if (inventoryData && partsData) {
+        const filteredRowsInventory = filteredRowsToConvert(
+          inventoryData.fileName,
+          inventoryData.content,
           selectedSetId
         );
-        console.log("filteredRows", filteredRows);
-        const parsedValue = cleanCsvContent(filteredRows, fileName);
-        //console.log("parsedValue", parsedValue);
+        console.log("filteredRowsInventory", filteredRowsInventory);
+
+        // extract Part-num de filteredRowsInventory
+        const partNums = filteredRowsInventory.map((r) => {
+          const rowElements = r.split(",").map((str) => str.trim());
+          //console.log("rowElements", rowElements);
+          const index = inventoryKeys.indexOf("part_num"); // index 0
+          //console.log("index", index);
+          return rowElements[index];
+        });
+
+        console.log("partNums", partNums); // contien la liste des part-nums du Set
+
+        //filtrer parts
+        const { keysArray: partsKeys, rows: partsRows } = extractKeysAndRows(
+          partsData.content
+        );
       }
     } catch (error) {
       console.error("Erreur lors du parsing des fichiers CSV :", error);
