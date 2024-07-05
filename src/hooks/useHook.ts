@@ -7,13 +7,8 @@ import {
   Set,
 } from "../types/csvType";
 
-import {
-  cleanCsvContent,
-  filteredRowsToConvert,
-  filteredRowsWithSet,
-} from "../utils/parser";
-import { InventoryPart, LegoSetType, MergedObject } from "../types/legoTypes";
-import { extractKeysAndRows, mergeInventoryAndParts } from "../utils/utils";
+import { cleanCsvContent } from "../utils/parser";
+import { extractKeysAndRows } from "../utils/utils";
 
 type ResultType = {
   fileName: string;
@@ -38,43 +33,43 @@ type LegoSetsState = {
   inventory?: Inventory[];
 };
 
-export function useHook() {
-  const [datasToParse, setDatasToParse] = useState<DataToParseType[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [selectedSetIds, setSelectedSetIds] = useState<string[]>([]);
+type LegoSets = {
+  sets: Set[];
+  displayedSets: Set[];
+};
 
-  const [legoData, setLegoData] = useState<LegoSetsState>({
+export function useHook() {
+  const [datas, setDatas] = useState<DataToParseType[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [legoSets, setLegoSets] = useState<LegoSets>({
     sets: [],
-    parts: [],
-    /*inventory: [], */
+    displayedSets: [],
   });
 
-  const [partsOfLegoSet, setPartsOfLegoSet] = useState<MergedObject[]>();
-
   useEffect(() => {
-    if (datasToParse.length === 0) {
+    if (datas.length === 0) {
       console.log("Pas de parsing");
       return;
     }
-    console.log("datasToParse", datasToParse);
+    //console.log("datasToParse", datasToParse);
     const parseSets = async () => {
       setIsLoading(true);
 
       try {
-        const setsData = datasToParse.find((data) => data.fileName === "sets");
+        const setsData = datas.find((data) => data.fileName === "sets");
 
         if (setsData) {
           const { content } = setsData;
-          const { keysArray, rows } = extractKeysAndRows(content);
-          const parsedSets = cleanCsvContent(keysArray, rows) as Set[];
-          setLegoData((prevData) => ({
-            ...prevData,
+          const { keysArray: setsKeysArray, rows: setsRows } =
+            extractKeysAndRows(content);
+
+          const parsedSets = cleanCsvContent(setsKeysArray, setsRows) as Set[];
+
+          setLegoSets((prevSets) => ({
+            ...prevSets,
             sets: parsedSets,
           }));
-          // Retirer "sets" de datasToParse pour eviter un traitement inutile
-          setDatasToParse((prevData) =>
-            prevData.filter((data) => data.fileName !== "sets")
-          );
         }
       } catch (error) {
         console.error("Erreur lors du parsing des fichiers CSV :", error);
@@ -85,103 +80,11 @@ export function useHook() {
     };
 
     parseSets();
-  }, [datasToParse]);
-
-  useEffect(() => {
-    console.log("SetId", selectedSetIds);
-    console.log("datasToParse", datasToParse);
-
-    // Fonction pour récupérer les pièces d'un Set LEGO
-    const getPartsOfLegoSets = async (selectedSetIds: string[]) => {
-      try {
-        const inventoryData = datasToParse.find(
-          (data) => data.fileName === "inventory"
-        );
-        //console.log("inventoryData", inventoryData);
-        const partsData = datasToParse.find(
-          (data) => data.fileName === "parts"
-        );
-        // console.log("partsData", partsData);
-        const { fileName: inventoryFileName, content: inventoryContent } =
-          inventoryData;
-        const { keysArray: inventoryKeys, rows: inventoryRows } =
-          extractKeysAndRows(inventoryContent);
-
-        console.log("inventoryKeys", inventoryKeys);
-        console.log("inventoryRows", inventoryRows);
-
-        if (inventoryData && partsData) {
-          const filteredRowsInventory = filteredRowsToConvert(
-            inventoryKeys,
-            inventoryFileName,
-            inventoryRows,
-            selectedSetIds
-          );
-
-          const testInventory = cleanCsvContent(
-            inventoryKeys,
-            filteredRowsInventory
-          );
-          console.log("testInventory", testInventory);
-
-          // extract Part-num of filteredRowsInventory
-          const partNums = filteredRowsInventory.map((r) => {
-            const rowElements = r.split(",").map((str) => str.trim());
-            //console.log("rowElements", rowElements);
-            const index = inventoryKeys.indexOf("part_num"); // index 0
-            //console.log("index", index);
-            return rowElements[index];
-          });
-          console.log("partNums", partNums); // contien la liste des part-nums du Set
-
-          const { fileName: partFileName, content: partContent } = partsData;
-          const { keysArray: partKeys, rows: partRows } =
-            extractKeysAndRows(partContent);
-
-          console.log("partKeys", partKeys);
-          console.log("partRows", partRows);
-
-          const filteredRowsParts = filteredRowsToConvert(
-            partKeys,
-            partFileName,
-            partRows,
-            partNums
-          );
-          console.log("filteredRowsParts", filteredRowsParts);
-          const testParts = cleanCsvContent(partKeys, filteredRowsParts);
-
-          console.log("testparts", testParts);
-
-          // Mergin both Datas
-          const testMerging = mergeInventoryAndParts(testInventory, testParts);
-          return testMerging;
-        }
-      } catch (error) {
-        console.error("Erreur lors du parsing des fichiers CSV :", error);
-      }
-    };
-
-    getPartsOfLegoSets(selectedSetIds);
-  }, [selectedSetIds]);
-
-  //a DEPLACER dans APP
-  const handleSetClick = (setId: string) => {
-    setSelectedSetIds((prev) => {
-      //Verifier la présence de l'id dans le tableau
-      if (prev.includes(setId)) {
-        return prev.filter((id) => id !== setId);
-      } else {
-        return [...prev, setId];
-      }
-    });
-  };
+  }, [datas]);
 
   return {
     isLoading,
-    setDatasToParse,
-    setSelectedSetIds,
-    legoData,
-    handleSetClick,
-    partsOfLegoSet,
+    setDatas,
+    legoSets,
   };
 }
