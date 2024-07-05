@@ -13,7 +13,7 @@ import {
   filteredRowsWithSet,
 } from "../utils/parser";
 import { InventoryPart, LegoSetType } from "../types/legoTypes";
-import { extractKeysAndRows } from "../utils/utils";
+import { extractKeysAndRows, mergeInventoryAndParts } from "../utils/utils";
 
 type ResultType = {
   fileName: string;
@@ -74,8 +74,11 @@ export function useHook() {
           selectedSetId
         );
 
-        const test = cleanCsvContent(inventoryKeys, filteredRowsInventory);
-        console.log("test", test);
+        const testInventory = cleanCsvContent(
+          inventoryKeys,
+          filteredRowsInventory
+        );
+        console.log("testInventory", testInventory);
 
         // extract Part-num de filteredRowsInventory
         const partNums = filteredRowsInventory.map((r) => {
@@ -103,6 +106,10 @@ export function useHook() {
         const testParts = cleanCsvContent(partKeys, filteredRowsParts);
 
         console.log("testparts", testParts);
+
+        // Mergin both Datas
+        const testMerging = mergeInventoryAndParts(testInventory, testParts);
+        //console.log("testMerging", testMerging);
       }
     } catch (error) {
       console.error("Erreur lors du parsing des fichiers CSV :", error);

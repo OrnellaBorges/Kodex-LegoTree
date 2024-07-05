@@ -26,7 +26,6 @@ function App() {
         <CsvLoader setDatasToParse={setDatasToParse} />
       </header>
       {legoData && <LegoTree data={legoData} onClick={handleSetClick} />}
-
       {isLoading && <div>Loading...</div>}
     </div>
   );
