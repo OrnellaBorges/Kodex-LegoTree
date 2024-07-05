@@ -1,10 +1,10 @@
-import "./App.css";
-import CsvLoader from "./components/CsvLoader";
+import { useEffect, useState } from "react";
+
 import { useHook } from "./hooks/useHook";
+
+import CsvLoader from "./components/CsvLoader";
 import LegoTree from "./components/Tree/LegoTree";
-//import { useCsvParser } from "./hooks/useCsvData";
-import { mockSetsWithParts, mockSets } from "./mocks/mockSets";
-import { useEffect } from "react";
+import "./App.css";
 
 function App() {
   //HOOK
@@ -14,18 +14,33 @@ function App() {
     setSelectedSetIds,
     legoData,
     handleSetClick,
+    partsOfLegoSet,
   } = useHook();
+
+  const [csvLoaded, setCsvLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     console.log("App component loaded");
   }, []);
+
+  useEffect(() => {
+    if (legoData.sets.length > 0) {
+      setCsvLoaded(true);
+    }
+  }, [legoData]);
 
   return (
     <div className="App">
       <header className="header">
         <CsvLoader setDatasToParse={setDatasToParse} />
       </header>
-      {legoData && <LegoTree data={legoData} onClick={handleSetClick} />}
+      {csvLoaded && (
+        <LegoTree
+          legoSets={legoData}
+          parts={partsOfLegoSet ? partsOfLegoSet : []}
+          onClick={handleSetClick}
+        />
+      )}
       {isLoading && <div>Loading...</div>}
     </div>
   );

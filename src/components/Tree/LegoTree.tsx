@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Inventory, Part, Set } from "../../types/csvType";
-import { LegoSetType, LegoSetType2 } from "../../types/legoTypes";
+import { LegoSetType, LegoSetType2, MergedObject } from "../../types/legoTypes";
 import LegoSet from "./LegoSet";
 
 type LegoSetsState = {
@@ -8,19 +9,23 @@ type LegoSetsState = {
   inventory?: Inventory[];
 };
 type LegoTreeProps = {
-  data: LegoSetsState;
+  legoSets: LegoSetsState;
+  parts: MergedObject[];
   onClick: (setId: string) => void;
 };
 
-export default function LegoTree({ data, onClick }: LegoTreeProps) {
+export default function LegoTree({ legoSets, parts, onClick }: LegoTreeProps) {
+  const [diplayLimit, setDiplayLimit] = useState<number>(10);
+  const visibleLegoSets = legoSets.sets.slice(0, diplayLimit);
   return (
     <main>
-      <h2>Lego Tree</h2>
+      <h2 className="title-level2">Lego Tree</h2>
       <ul className="parentNode">
-        {data.sets.map((set, setIndex) => (
+        {visibleLegoSets.map((set, setIndex) => (
           <LegoSet
             key={`${set.set_id} ${setIndex}`}
             set={set}
+            parts={parts}
             onClick={onClick}
           />
         ))}

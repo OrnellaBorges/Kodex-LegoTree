@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { LegoPartType, InventoryPart } from "../../types/legoTypes";
-import InventoryDetails from "./InventoryDetails";
+import {
+  LegoPartType,
+  InventoryPart,
+  MergedObject,
+} from "../../types/legoTypes";
 
 type LegoPartProps = {
-  part: InventoryPart;
+  part: MergedObject;
 };
 
 export default function LegoPart({ part }: LegoPartProps) {
@@ -15,10 +18,8 @@ export default function LegoPart({ part }: LegoPartProps) {
 
   return (
     <li className="childNode">
-      <div onClick={toggleExpandPart}>
-        <p>{part._name}</p>
-      </div>
-      {/*  {isOpen && <InventoryDetails inventory={part.inventory_part} />} */}
+      <p>{part._name}</p>
+      {/*       <div onClick={toggleExpandPart}></div> */}
     </li>
   );
 }

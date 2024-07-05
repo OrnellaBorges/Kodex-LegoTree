@@ -1,9 +1,9 @@
 import { Inventory } from "../../types/csvType";
-import { LegoPartType } from "../../types/legoTypes";
+import { LegoPartType, MergedObject } from "../../types/legoTypes";
 import LegoPart from "./LegoPart";
 
 type LegoPartsProps = {
-  parts: Inventory[];
+  parts: MergedObject[];
 };
 
 export default function LegoParts({ parts }: LegoPartsProps) {

@@ -14,7 +14,7 @@ export const mergeInventoryAndParts = (inventory: any, parts: any) => {
   console.log("partsDict", partsDict);
 
   // Parcourir inventory et fusionner les objets
-  const newPart = inventory.map((item) => {
+  const newParts = inventory.map((item) => {
     const part = partsDict[item.part_num];
     return {
       part_num: item.part_num,
@@ -26,7 +26,7 @@ export const mergeInventoryAndParts = (inventory: any, parts: any) => {
     };
   });
 
-  console.log("newPart", newPart);
+  console.log("newPart", newParts);
 
-  //return newPart;
+  return newParts;
 };
