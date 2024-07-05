@@ -1,5 +1,5 @@
-import { Inventory } from "../../types/csvType";
-import { LegoPartType, MergedObject } from "../../types/legoTypes";
+import { useState } from "react";
+import { MergedObject } from "../../types/legoTypes";
 import LegoPart from "./LegoPart";
 
 type LegoPartsProps = {
@@ -7,9 +7,15 @@ type LegoPartsProps = {
 };
 
 export default function LegoParts({ parts }: LegoPartsProps) {
+  console.log("Rendering LegoParts with parts:", parts);
+  const [diplayLimit, setDiplayLimit] = useState<number>(5);
+  const [start, setStart] = useState<number>(0);
+
+  const visibleparts = parts.slice(0, diplayLimit);
+
   return (
     <ul className="legoParts">
-      {parts.map((part, partIndex) => (
+      {visibleparts.map((part, partIndex) => (
         <LegoPart key={partIndex} part={part} />
       ))}
     </ul>

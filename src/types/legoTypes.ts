@@ -38,7 +38,7 @@ export type LegoSetType2 = {
 
 export type MergedObject = {
   part_num: string;
-  _name: string;
+  name: string;
   category: string;
   quantity: string;
   set_id: string;

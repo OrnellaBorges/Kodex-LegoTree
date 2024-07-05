@@ -17,6 +17,7 @@ export default function LegoSet({ set, parts, onClick }: LegoSetProps) {
   const handleClick = () => {
     setIsOpen(!isOpen);
     onClick(set.set_id);
+    console.log(`Clicked on set: ${set.set_id}, isOpen: ${!isOpen}`);
   };
 
   return (

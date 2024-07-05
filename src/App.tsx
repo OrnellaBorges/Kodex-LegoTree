@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import { useHook } from "./hooks/useHook";
 import { useGetLegoParts } from "./hooks/useGetLegoParts";
-
 import CsvLoader from "./components/CsvLoader";
 import LegoTree from "./components/Tree/LegoTree";
 import "./App.css";
@@ -13,9 +11,7 @@ function App() {
   const [datasToParse, setDatasToParse] = useState<DataToParseType[]>([]);
   const [csvLoaded, setCsvLoaded] = useState<boolean>(false);
 
-  //HOOK
   const { isLoading, legoSets, setDatas, handleIncrement } = useHook();
-
   const { partsOfLegoSet } = useGetLegoParts(selectedSetIds, datasToParse);
 
   useEffect(() => {
@@ -30,17 +26,13 @@ function App() {
 
   useEffect(() => {
     console.log("datasToParse", datasToParse);
-
-    // envoyer sets dans le useHook
     const setsDatas = datasToParse.filter((el) => el.fileName === "sets");
     console.log("setsDatas", setsDatas);
-
     setDatas(setsDatas);
-  }, [datasToParse]);
+  }, [datasToParse, setDatas]);
 
   const handleSetClick = (setId: string) => {
     setSelectedSetIds((prev) => {
-      //Verifier la présence de l'id dans le tableau
       if (prev.includes(setId)) {
         return prev.filter((id) => id !== setId);
       } else {

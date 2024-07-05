@@ -80,9 +80,17 @@ main {
   flex-direction: column;
 }
 
+.childNode {
+  border: 2px solid blue;
+}
+
 .legoSet {
   padding: 1rem;
   border: 2px solid green;
   width: 100%;
   cursor: pointer;
+}
+
+.legoParts {
+  border: 2px solid orange;
 }
