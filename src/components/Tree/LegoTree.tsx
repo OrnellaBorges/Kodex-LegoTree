@@ -16,10 +16,13 @@ type LegoTreeProps = {
 
 export default function LegoTree({ legoSets, parts, onClick }: LegoTreeProps) {
   const [diplayLimit, setDiplayLimit] = useState<number>(10);
+
   const visibleLegoSets = legoSets.sets.slice(0, diplayLimit);
+
   return (
     <main>
       <h2 className="title-level2">Lego Tree</h2>
+
       <ul className="parentNode">
         {visibleLegoSets.map((set, setIndex) => (
           <LegoSet

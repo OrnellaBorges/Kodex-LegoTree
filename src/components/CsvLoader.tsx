@@ -12,7 +12,7 @@ export default function CsvLoader({ setDatasToParse }: CsvLoaderProps) {
   const [fileList, setFileList] = useState<File[]>([]); // lui recupère les csv via l'input
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  console.log("fileList", fileList);
+  //console.log("fileList", fileList);
 
   const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

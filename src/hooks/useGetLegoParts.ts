@@ -79,7 +79,8 @@ export function useGetLegoParts(
 
           // Mergin both Datas
           const testMerging = mergeInventoryAndParts(testInventory, testParts);
-          return testMerging;
+
+          setPartsOfLegoSet(testMerging);
         }
       } catch (error) {
         console.error("Erreur lors du parsing des fichiers CSV :", error);

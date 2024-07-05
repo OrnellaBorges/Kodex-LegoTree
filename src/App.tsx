@@ -14,7 +14,7 @@ function App() {
   const [csvLoaded, setCsvLoaded] = useState<boolean>(false);
 
   //HOOK
-  const { isLoading, legoSets, setDatas } = useHook();
+  const { isLoading, legoSets, setDatas, handleIncrement } = useHook();
 
   const { partsOfLegoSet } = useGetLegoParts(selectedSetIds, datasToParse);
 
@@ -36,10 +36,6 @@ function App() {
     console.log("setsDatas", setsDatas);
 
     setDatas(setsDatas);
-    /*  //Retirer "sets" de datasToParse pour eviter un traitement inutile
-    setDatasToParse((prevData) =>
-      prevData.filter((data) => data.fileName !== "sets")
-    ); */
   }, [datasToParse]);
 
   const handleSetClick = (setId: string) => {
@@ -65,6 +61,7 @@ function App() {
           onClick={handleSetClick}
         />
       )}
+      <button onClick={handleIncrement}>Next Sets</button>
       {isLoading && <div>Loading...</div>}
     </div>
   );
