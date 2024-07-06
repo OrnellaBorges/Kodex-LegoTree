@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useHook } from "./hooks/useHook";
 import { useGetLegoParts } from "./hooks/useGetLegoParts";
 import CsvLoader from "./components/CsvLoader";

@@ -14,13 +14,22 @@ export function useGetLegoParts(
 
   // Fonction pour récupérer les pièces d'un Set LEGO
   const getPartsOfLegoSets = async (selectedSetIds: string[]) => {
-    try {
-      const inventoryData = datasToParse.find(
-        (data) => data.fileName === "inventory"
+    const inventoryData = datasToParse.find(
+      (data) => data.fileName === "inventory"
+    );
+    const partsData = datasToParse.find((data) => data.fileName === "parts");
+
+    console.log("inventoryData", inventoryData);
+    console.log("partsData", partsData);
+
+    if (!inventoryData || !partsData) {
+      console.warn(
+        "Données manquantes : inventoryData ou partsData est undefined"
       );
-      //console.log("inventoryData", inventoryData);
-      const partsData = datasToParse.find((data) => data.fileName === "parts");
-      // console.log("partsData", partsData);
+      setIsLoading(false); // Mettre à jour l'état de chargement
+      return; // Sortir de la fonction si les données ne sont pas disponibles
+    }
+    try {
       const { fileName: inventoryFileName, content: inventoryContent } =
         inventoryData;
       const { keysArray: inventoryKeys, rows: inventoryRows } =
