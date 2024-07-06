@@ -8,7 +8,7 @@ type LegoPartsProps = {
 };
 
 export default function LegoParts({ parts }: LegoPartsProps) {
-  console.log("Rendering LegoParts with parts:", parts);
+  // console.log("Rendering LegoParts with parts:", parts);
   const [displayLimit, setDisplayLimit] = useState<number>(5);
   const [start, setStart] = useState<number>(0);
 
@@ -19,7 +19,7 @@ export default function LegoParts({ parts }: LegoPartsProps) {
   }, [parts, start]);
 
   const displayNextParts = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log("next");
+    console.log("next Parts");
     e.stopPropagation(); // Stop event propagation
     setStart((prevStart) => prevStart + displayLimit);
   };
@@ -32,7 +32,7 @@ export default function LegoParts({ parts }: LegoPartsProps) {
         ))}
       </ul>
 
-      <button onScroll={displayNextParts}>Next</button>
+      <button onClick={displayNextParts}>Next</button>
     </>
   );
 }

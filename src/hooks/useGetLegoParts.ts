@@ -14,6 +14,8 @@ export function useGetLegoParts(
 
   // Fonction pour récupérer les pièces d'un Set LEGO
   const getPartsOfLegoSets = async (selectedSetIds: string[]) => {
+    console.log("selectedSetIds", selectedSetIds);
+    setIsLoading(true);
     const inventoryData = datasToParse.find(
       (data) => data.fileName === "inventory"
     );
@@ -36,63 +38,76 @@ export function useGetLegoParts(
         extractKeysAndRows(inventoryContent);
 
       console.log("inventoryKeys", inventoryKeys);
-      console.log("inventoryRows", inventoryRows);
+      console.log("inventoryRows readed", inventoryRows.length);
 
       if (inventoryData && partsData) {
-        const filteredRowsInventory = filteredRowsToConvert(
-          inventoryKeys,
-          inventoryFileName,
-          inventoryRows,
-          selectedSetIds
-        );
+        let allParts = [];
 
-        const testInventory = cleanCsvContent(
-          inventoryKeys,
-          filteredRowsInventory
-        );
-        console.log("testInventory", testInventory);
+        for (const setId of selectedSetIds) {
+          console.log("LOOP FOR OF");
+          // Vérifier si au moins un setId existe dans les données d'inventaire
+          const isValidSetId = inventoryRows.some((row) => {
+            // Replace this logic with your specific logic to check if setId exists in the row
+            return row.includes(setId); // Exemple basique : vérifier si setId est dans la ligne
+          });
+          console.log("isValidSetId", isValidSetId);
 
-        // extract Part-num of filteredRowsInventory
-        const partNums = filteredRowsInventory.map((r) => {
-          const rowElements = r.split(",").map((str) => str.trim());
-          //console.log("rowElements", rowElements);
-          const index = inventoryKeys.indexOf("part_num"); // index 0
-          //console.log("index", index);
-          return rowElements[index];
-        });
-        console.log("partNums", partNums); // contien la liste des part-nums du Set
+          if (!isValidSetId) {
+            console.warn(`Le set id ${setId} n'existe pas dans l'inventaire.`);
+            continue; // Passer au prochain setId si celui-ci n'existe pas
+          }
+          const filteredRowsInventory = filteredRowsToConvert(
+            inventoryKeys,
+            inventoryFileName,
+            inventoryRows,
+            setId
+          );
 
-        const { fileName: partFileName, content: partContent } = partsData;
-        const { keysArray: partKeys, rows: partRows } =
-          extractKeysAndRows(partContent);
+          const testInventory = cleanCsvContent(
+            inventoryKeys,
+            filteredRowsInventory
+          );
+          console.log("testInventory", testInventory);
+          // extract Part-num of filteredRowsInventory
+          const partNums = filteredRowsInventory.map((r) => {
+            const rowElements = r.split(",").map((str) => str.trim());
+            //console.log("rowElements", rowElements);
+            const index = inventoryKeys.indexOf("part_num"); // index 0
+            //console.log("index", index);
+            return rowElements[index];
+          });
+          console.log("partNums", partNums); // contien la liste des part-nums du Set
 
-        console.log("partKeys", partKeys);
-        console.log("partRows", partRows);
+          const { fileName: partFileName, content: partContent } = partsData;
+          const { keysArray: partKeys, rows: partRows } =
+            extractKeysAndRows(partContent);
 
-        const filteredRowsParts = filteredRowsToConvert(
-          partKeys,
-          partFileName,
-          partRows,
-          partNums
-        );
-        console.log("filteredRowsParts", filteredRowsParts);
-        const testParts = cleanCsvContent(partKeys, filteredRowsParts);
+          const filteredRowsParts = filteredRowsToConvert(
+            partKeys,
+            partFileName,
+            partRows,
+            partNums
+          );
 
-        console.log("testparts", testParts);
+          console.log("filteredRowsParts", filteredRowsParts);
+          const testParts = cleanCsvContent(partKeys, filteredRowsParts);
 
-        // Mergin both Array
-        const testMerging = mergeInventoryAndParts(testInventory, testParts);
-        setPartsOfLegoSet(testMerging);
+          console.log("testparts", testParts);
+          const mergedParts = mergeInventoryAndParts(testInventory, testParts);
+          allParts = [...allParts, ...mergedParts];
+        }
+        setPartsOfLegoSet(allParts);
       }
     } catch (error) {
       console.error("Erreur lors du parsing des fichiers CSV :", error);
+    } finally {
+      setIsLoading(false); // Mettre à jour l'état de chargement à false
     }
   };
 
   useEffect(() => {
     console.log("SetId", selectedSetIds);
     console.log("datasToParse", datasToParse);
-
     getPartsOfLegoSets(selectedSetIds);
   }, [selectedSetIds]);
 

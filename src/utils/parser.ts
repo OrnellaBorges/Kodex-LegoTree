@@ -102,10 +102,14 @@ export const filteredRowsToConvert = (
   dirtyText: string[],
   selectedId: string | string[]
 ): string[] => {
+  console.log("selectedId", selectedId);
+
   const filterKey = determineFilterKey(fileName);
   console.log("filterKey", filterKey);
+
   const index = keysArray.indexOf(filterKey);
   console.log("index", index);
+
   if (index === -1) {
     throw new Error(
       `Clé de filtre "${filterKey}" introuvable dans les clés fournies.`
@@ -123,45 +127,6 @@ export const filteredRowsToConvert = (
       return valueToFound === selectedId;
     }
   });
-
-  return filteredRows;
-};
-
-export const filteredRowsWithSet = (
-  keysArray: string[],
-  rows: string[],
-  filterKey: string,
-  filterValues: string | string[]
-): string[] => {
-  const index = keysArray.indexOf(filterKey);
-  if (index === -1) {
-    throw new Error(
-      `Clé de filtre "${filterKey}" introuvable dans les clés fournies.`
-    );
-  }
-
-  const filteredRows: string[] = [];
-  const filterValuesSet = new Set(
-    Array.isArray(filterValues) ? filterValues : [filterValues]
-  );
-  const foundValuesSet = new Set();
-
-  for (const row of rows) {
-    const rowElements = row.split(",").map((str) => str.trim());
-    const valueToFound = rowElements[index];
-
-    if (
-      filterValuesSet.has(valueToFound) &&
-      !foundValuesSet.has(valueToFound)
-    ) {
-      filteredRows.push(row);
-      foundValuesSet.add(valueToFound);
-
-      if (foundValuesSet.size === filterValuesSet.size) {
-        break; // Toutes les correspondances trouvées, arrêter le filtrage
-      }
-    }
-  }
 
   return filteredRows;
 };

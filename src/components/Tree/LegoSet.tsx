@@ -22,8 +22,7 @@ export default function LegoSet({ set, parts, onClick }: LegoSetProps) {
 
   return (
     <li className="legoSet" onClick={handleClick}>
-      <h3>{set._name}</h3>
-
+      <h3>SET - {set.set_id}</h3>
       {isOpen && <LegoParts parts={parts} />}
     </li>
   );

@@ -5,12 +5,10 @@ type LegoPartProps = {
 };
 
 export default function LegoPart({ part }: LegoPartProps) {
-  console.log("part", part);
+  //console.log("part", part);
   return (
     <li className="childNode">
-      <p>{part.name}</p>
-      <p>{part.color}</p>
-      <p>{part.category}</p>
+      <p>{part.part_num}</p>
     </li>
   );
 }
