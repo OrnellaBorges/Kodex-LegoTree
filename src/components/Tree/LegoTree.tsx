@@ -9,16 +9,22 @@ type LegoSetsState = {
   inventory?: Inventory[];
 };
 type LegoTreeProps = {
+  selectedSet: string[];
   legoSets: LegoSetsState;
   parts: { setId: string; parts: MergedObject[] }[];
   onClick: (setId: string) => void;
 };
 
-export default function LegoTree({ legoSets, parts, onClick }: LegoTreeProps) {
+export default function LegoTree({
+  legoSets,
+  parts,
+  onClick,
+  selectedSet,
+}: LegoTreeProps) {
   const [diplayLimit, setDiplayLimit] = useState<number>(10);
 
   const visibleLegoSets = legoSets.sets.slice(0, diplayLimit);
-
+  console.log("parts", parts);
   return (
     <main>
       <h2 className="title-level2">Lego Tree</h2>
@@ -28,7 +34,7 @@ export default function LegoTree({ legoSets, parts, onClick }: LegoTreeProps) {
           <LegoSet
             key={`${set.set_id} ${setIndex}`}
             set={set}
-            parts={parts}
+            parts={parts.find((p) => p.setId === set.set_id)?.parts || []}
             onClick={onClick}
           />
         ))}

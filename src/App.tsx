@@ -49,6 +49,7 @@ function App() {
       {csvLoaded && (
         <LegoTree
           legoSets={legoSets}
+          selectedSet={selectedSetIds}
           parts={partsOfLegoSets ? partsOfLegoSets : []}
           onClick={handleSetClick}
         />

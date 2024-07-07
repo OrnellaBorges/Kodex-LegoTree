@@ -6,7 +6,7 @@ import { MergedObject } from "../../types/legoTypes";
 
 type LegoSetProps = {
   set: Set;
-  parts: { setId: string; parts: MergedObject[] }[];
+  parts: MergedObject[];
   onClick: (setId: string) => void;
 };
 
