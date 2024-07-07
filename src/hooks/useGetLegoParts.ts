@@ -101,10 +101,10 @@ export function useGetLegoParts(
 
           newParts.push({ setId, parts: mergedParts });
 
-          if (!newParts[setId]) {
+          /* if (!newParts[setId]) {
             newParts[setId] = [];
           }
-          newParts[setId] = [...newParts[setId], ...mergedParts];
+          newParts[setId] = [...newParts[setId], ...mergedParts]; */
         }
 
         setPartsOfLegoSets(newParts);
