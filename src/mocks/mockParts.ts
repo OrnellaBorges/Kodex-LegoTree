@@ -80,3 +80,27 @@ export const legoParts = [
   { part_num: "13793", _name: "Minifig Welding Gun", category: 27 },
   { part_num: "13808", _name: "Minifig Saxophone", category: 27 },
 ];
+
+export const partsOfLegoSets = [
+  {
+    setId: "10706-1",
+    partsOfLegoSets: [
+      {
+        part_num: "11211",
+        quantity: "1",
+        set_id: "10706-1",
+        color: "Dark Blue",
+        name: "1x Brick Special 1 x 2 with Studs on 1 Side",
+        category: "5",
+      },
+      {
+        part_num: "14553",
+        quantity: "1",
+        set_id: "10706-1",
+        color: "Dark Blue",
+        name: "1x Brick Special 1 x 2 with Studs on 1 Side",
+        category: "5",
+      },
+    ],
+  },
+];

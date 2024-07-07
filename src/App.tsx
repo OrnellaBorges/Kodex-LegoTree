@@ -12,7 +12,7 @@ function App() {
   const [csvLoaded, setCsvLoaded] = useState<boolean>(false);
 
   const { isLoading, legoSets, setDatas, handleIncrement } = useHook();
-  const { partsOfLegoSet } = useGetLegoParts(selectedSetIds, datasToParse);
+  const { partsOfLegoSets } = useGetLegoParts(selectedSetIds, datasToParse);
 
   useEffect(() => {
     console.log("App component loaded");
@@ -49,7 +49,7 @@ function App() {
       {csvLoaded && (
         <LegoTree
           legoSets={legoSets}
-          parts={partsOfLegoSet ? partsOfLegoSet : []}
+          parts={partsOfLegoSets ? partsOfLegoSets : []}
           onClick={handleSetClick}
         />
       )}

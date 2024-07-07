@@ -10,7 +10,7 @@ type LegoSetsState = {
 };
 type LegoTreeProps = {
   legoSets: LegoSetsState;
-  parts: MergedObject[];
+  parts: { setId: string; parts: MergedObject[] }[];
   onClick: (setId: string) => void;
 };
 

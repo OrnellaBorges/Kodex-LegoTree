@@ -10,12 +10,16 @@ export function useGetLegoParts(
 ) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [partsOfLegoSet, setPartsOfLegoSet] = useState<MergedObject[]>();
+  const [partsOfLegoSets, setPartsOfLegoSets] = useState<
+    { setId: string; parts: MergedObject[] }[]
+  >([]);
 
   // Fonction pour récupérer les pièces d'un Set LEGO
   const getPartsOfLegoSets = async (selectedSetIds: string[]) => {
     console.log("selectedSetIds", selectedSetIds);
     setIsLoading(true);
+    // reinitiliser à vide
+    //setPartsOfLegoSets([]);
     const inventoryData = datasToParse.find(
       (data) => data.fileName === "inventory"
     );
@@ -41,14 +45,14 @@ export function useGetLegoParts(
       console.log("inventoryRows readed", inventoryRows.length);
 
       if (inventoryData && partsData) {
-        let allParts = [];
+        const newParts = [...partsOfLegoSets];
 
         for (const setId of selectedSetIds) {
           console.log("LOOP FOR OF");
           // Vérifier si au moins un setId existe dans les données d'inventaire
           const isValidSetId = inventoryRows.some((row) => {
-            // Replace this logic with your specific logic to check if setId exists in the row
-            return row.includes(setId); // Exemple basique : vérifier si setId est dans la ligne
+            //check if setId exists in the row
+            return row.includes(setId); //vérifier si setId est dans la ligne
           });
           console.log("isValidSetId", isValidSetId);
 
@@ -94,9 +98,16 @@ export function useGetLegoParts(
 
           console.log("testparts", testParts);
           const mergedParts = mergeInventoryAndParts(testInventory, testParts);
-          allParts = [...allParts, ...mergedParts];
+
+          newParts.push({ setId, parts: mergedParts });
+
+          if (!newParts[setId]) {
+            newParts[setId] = [];
+          }
+          newParts[setId] = [...newParts[setId], ...mergedParts];
         }
-        setPartsOfLegoSet(allParts);
+
+        setPartsOfLegoSets(newParts);
       }
     } catch (error) {
       console.error("Erreur lors du parsing des fichiers CSV :", error);
@@ -107,12 +118,12 @@ export function useGetLegoParts(
 
   useEffect(() => {
     console.log("SetId", selectedSetIds);
-    console.log("datasToParse", datasToParse);
+
     getPartsOfLegoSets(selectedSetIds);
   }, [selectedSetIds]);
 
   return {
     isLoading,
-    partsOfLegoSet,
+    partsOfLegoSets,
   };
 }
