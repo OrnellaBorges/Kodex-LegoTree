@@ -48,11 +48,22 @@ export function useGetLegoParts(
         const newParts = [...partsOfLegoSets];
 
         for (const setId of selectedSetIds) {
-          console.log("LOOP FOR OF");
+          console.warn("LOOP FOR OF");
+
+          // check si le set a déjà été convertit
+
+          const isSetParsed = newParts.some((set) => set.setId === setId);
+          console.log("isSetParsed", isSetParsed);
+
+          if (isSetParsed) {
+            console.log("already parsed");
+            continue;
+          }
+
           // Vérifier si au moins un setId existe dans les données d'inventaire
           const isValidSetId = inventoryRows.some((row) => {
-            //check if setId exists in the row
-            return row.includes(setId); //vérifier si setId est dans la ligne
+            //vérifier si setId existe dans les lignes de inventory
+            return row.includes(setId);
           });
           console.log("isValidSetId", isValidSetId);
 
@@ -118,7 +129,6 @@ export function useGetLegoParts(
 
   useEffect(() => {
     console.log("SetId", selectedSetIds);
-
     getPartsOfLegoSets(selectedSetIds);
   }, [selectedSetIds]);
 

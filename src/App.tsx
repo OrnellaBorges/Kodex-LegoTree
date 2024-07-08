@@ -54,8 +54,12 @@ function App() {
           onClick={handleSetClick}
         />
       )}
-      <button onClick={handleIncrement}>Next Sets</button>
-      {isLoading && <div>Loading...</div>}
+      {legoSets.sets.length > 0 && (
+        <button onClick={handleIncrement}>Next Sets</button>
+      )}
+      {isLoading && (
+        <div>Loading...converting sets please wait a few moments</div>
+      )}
     </div>
   );
 }

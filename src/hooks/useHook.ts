@@ -1,37 +1,8 @@
 import { useState, useEffect } from "react";
-import {
-  CSVDataType,
-  DataToParseType,
-  Inventory,
-  Part,
-  Set,
-} from "../types/csvType";
+import { DataToParseType, Set } from "../types/csvType";
 
 import { cleanCsvContent } from "../utils/parser";
 import { extractKeysAndRows } from "../utils/utils";
-
-type ResultType = {
-  fileName: string;
-  content: CSVDataType[];
-};
-
-type NewObjType = {
-  [fileName: string]: any[];
-};
-
-type LegoSetType2 = {
-  set_id: string;
-  _name: string;
-  year: number;
-  theme: string;
-  parts: Inventory[];
-};
-
-type LegoSetsState = {
-  sets: Set[];
-  parts?: Part[];
-  inventory?: Inventory[];
-};
 
 type LegoSets = {
   sets: Set[];
@@ -56,8 +27,12 @@ export function useHook() {
       const setsData = datas.find((data) => data.fileName === "sets");
       if (setsData) {
         const { content } = setsData;
+        console.log("content.length", content.length); // 416
         const { keysArray: setsKeysArray, rows: setsRows } =
           extractKeysAndRows(content);
+
+        console.log("setsRows.length", setsRows.length); // 9
+
         const rowsToparse = setsRows.slice(start, start + limit);
         console.log("rowsToparse", rowsToparse);
         const parsedLegoSets = cleanCsvContent(
@@ -91,7 +66,10 @@ export function useHook() {
   }, [parsedCount]);
 
   const handleIncrement = () => {
-    console.log("parsedCount", parsedCount);
+    console.log("previous parsedCount", parsedCount);
+    // si parsedCount est inferieur au nombre de lignes setsRows.length
+    //// ALORS incremente le parseCount
+
     const newParsedCount = parsedCount + limitParse;
     console.log("newParsedCount", newParsedCount);
     setParsedCount(newParsedCount);
