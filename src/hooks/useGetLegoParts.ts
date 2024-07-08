@@ -42,7 +42,7 @@ export function useGetLegoParts(
         extractKeysAndRows(inventoryContent);
 
       console.log("inventoryKeys", inventoryKeys);
-      console.log("inventoryRows readed", inventoryRows.length);
+      console.log("inventoryRows readed", inventoryRows.length); // 1666
 
       if (inventoryData && partsData) {
         const newParts = [...partsOfLegoSets];
@@ -52,10 +52,10 @@ export function useGetLegoParts(
 
           // check si le set a déjà été convertit
 
-          const isSetParsed = newParts.some((set) => set.setId === setId);
-          console.log("isSetParsed", isSetParsed);
+          const isAlreadyParsed = newParts.some((set) => set.setId === setId);
+          console.log("isSetParsed", isAlreadyParsed);
 
-          if (isSetParsed) {
+          if (isAlreadyParsed) {
             console.log("already parsed");
             continue;
           }
@@ -71,6 +71,7 @@ export function useGetLegoParts(
             console.warn(`Le set id ${setId} n'existe pas dans l'inventaire.`);
             continue; // Passer au prochain setId si celui-ci n'existe pas
           }
+
           const filteredRowsInventory = filteredRowsToConvert(
             inventoryKeys,
             inventoryFileName,
@@ -83,10 +84,11 @@ export function useGetLegoParts(
             filteredRowsInventory
           );
           console.log("testInventory", testInventory);
+
           // extract Part-num of filteredRowsInventory
           const partNums = filteredRowsInventory.map((r) => {
             const rowElements = r.split(",").map((str) => str.trim());
-            //console.log("rowElements", rowElements);
+
             const index = inventoryKeys.indexOf("part_num"); // index 0
             //console.log("index", index);
             return rowElements[index];

@@ -3,8 +3,8 @@ import { useHook } from "./hooks/useHook";
 import { useGetLegoParts } from "./hooks/useGetLegoParts";
 import CsvLoader from "./components/CsvLoader";
 import LegoTree from "./components/Tree/LegoTree";
-import "./App.css";
 import { DataToParseType } from "./types/csvType";
+import "./App.css";
 
 function App() {
   const [selectedSetIds, setSelectedSetIds] = useState<string[]>([]);
