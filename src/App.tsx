@@ -5,6 +5,9 @@ import CsvLoader from "./components/CsvLoader";
 import LegoTree from "./components/Tree/LegoTree";
 import { DataToParseType } from "./types/csvType";
 import "./App.css";
+import Tree from "./components/NewTree/Tree";
+
+import Sets from "./components/NewTree/Sets";
 
 function App() {
   const [selectedSetIds, setSelectedSetIds] = useState<string[]>([]);
@@ -12,7 +15,10 @@ function App() {
   const [csvLoaded, setCsvLoaded] = useState<boolean>(false);
 
   const { isLoading, legoSets, setDatas, handleIncrement } = useHook();
-  const { partsOfLegoSets } = useGetLegoParts(selectedSetIds, datasToParse);
+  const { partsOfLegoSets, handleNextPartsClick } = useGetLegoParts(
+    selectedSetIds,
+    datasToParse
+  );
 
   useEffect(() => {
     console.log("App component loaded");
@@ -31,7 +37,7 @@ function App() {
     setDatas(setsDatas);
   }, [datasToParse, setDatas]);
 
-  const handleSetClick = (setId: string) => {
+  /*  const handleSetClick = (setId: string) => {
     setSelectedSetIds((prev) => {
       if (prev.includes(setId)) {
         return prev.filter((id) => id !== setId);
@@ -39,14 +45,14 @@ function App() {
         return [...prev, setId];
       }
     });
-  };
+  }; */
 
   return (
     <div className="App">
       <header className="header">
         <CsvLoader setDatasToParse={setDatasToParse} />
       </header>
-      {csvLoaded && (
+      {/* {csvLoaded && (
         <LegoTree
           legoSets={legoSets}
           selectedSet={selectedSetIds}
@@ -59,7 +65,15 @@ function App() {
       )}
       {isLoading && (
         <div>Loading...converting sets please wait a few moments</div>
-      )}
+      )} */}
+
+      <Tree>
+        <Sets
+          legoSets={legoSets.sets}
+          actionClick={handleIncrement}
+          setSelectedSetIds={setSelectedSetIds}
+        />
+      </Tree>
     </div>
   );
 }

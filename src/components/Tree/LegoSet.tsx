@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Set } from "../../types/csvType";
 // import { LegoSetType, LegoSetType2 } from "../../types/legoTypes";
 import LegoParts from "./LegoParts";

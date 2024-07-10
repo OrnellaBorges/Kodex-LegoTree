@@ -66,6 +66,7 @@ export function useHook() {
   }, [parsedCount]);
 
   const handleIncrement = () => {
+    console.log("first");
     console.log("previous parsedCount", parsedCount);
     // si parsedCount est inferieur au nombre de lignes setsRows.length
     //// ALORS incremente le parseCount

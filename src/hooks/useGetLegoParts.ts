@@ -9,7 +9,6 @@ export function useGetLegoParts(
   datasToParse: DataToParseType[]
 ) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const [partsOfLegoSets, setPartsOfLegoSets] = useState<
     { setId: string; parts: MergedObject[] }[]
   >([]);
@@ -79,6 +78,8 @@ export function useGetLegoParts(
             setId
           );
 
+          console.log("filteredRows >Inventory", filteredRowsInventory);
+
           const testInventory = cleanCsvContent(
             inventoryKeys,
             filteredRowsInventory
@@ -134,8 +135,13 @@ export function useGetLegoParts(
     getPartsOfLegoSets(selectedSetIds);
   }, [selectedSetIds]);
 
+  const handleNextPartsClick = () => {
+    console.log("next Parts");
+  };
+
   return {
     isLoading,
     partsOfLegoSets,
+    handleNextPartsClick,
   };
 }
