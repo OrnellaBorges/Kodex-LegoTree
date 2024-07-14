@@ -22,6 +22,7 @@ function App() {
 
   useEffect(() => {
     console.log("App component loaded");
+    console.log("legoSets", legoSets);
   }, []);
 
   useEffect(() => {

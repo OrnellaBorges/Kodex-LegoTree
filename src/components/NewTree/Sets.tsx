@@ -5,8 +5,6 @@ type LegoSetProps = {
   legoSets: Set[];
   actionClick: () => void;
   setSelectedSetIds: React.Dispatch<React.SetStateAction<string[]>>;
-  /*  parts: MergedObject[];
-  onClick: (setId: string) => void; */
 };
 
 export default function LegoSet({
@@ -41,7 +39,7 @@ export default function LegoSet({
           <h3>SET - {set.set_id}</h3>
         </li>
       ))}
-      <button onClick={actionClick}>Next Sets</button>
+      {legoSets && <button onClick={actionClick}>Next Sets</button>}
     </ul>
   );
 }
