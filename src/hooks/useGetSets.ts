@@ -8,7 +8,7 @@ type LegoSets = {
   sets: Set[];
 };
 
-export function useHook() {
+export function useGetSets() {
   const [datas, setDatas] = useState<DataToParseType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [legoSets, setLegoSets] = useState<LegoSets>({
