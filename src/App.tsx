@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useHook } from "./hooks/useHook";
+import { useGetSets } from "./hooks/useGetSets";
 import { useGetLegoParts } from "./hooks/useGetLegoParts";
 import CsvLoader from "./components/CsvLoader";
 import LegoTree from "./components/Tree/LegoTree";
@@ -14,7 +14,7 @@ function App() {
   const [datasToParse, setDatasToParse] = useState<DataToParseType[]>([]);
   const [csvLoaded, setCsvLoaded] = useState<boolean>(false);
 
-  const { isLoading, legoSets, setDatas, handleIncrement } = useHook();
+  const { isLoading, legoSets, setDatas, handleIncrement } = useGetSets();
   const { partsOfLegoSets, handleNextPartsClick } = useGetLegoParts(
     selectedSetIds,
     datasToParse
